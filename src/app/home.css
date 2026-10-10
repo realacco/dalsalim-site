@@ -1,0 +1,899 @@
+/*
+  홈.
+
+  화려함은 이 한 장에만 둔다 — 큰 제목 · 번지는 파랑 · 겹친 카드 · 바뀌는 예시.
+  색은 전부 토큰이다. 거의 흰 바탕에 파랑 하나로 강조하고, 가계부 종류 색은 꼬리표와 작은 상자에만 쓴다.
+  배치는 760px(세 칸) · 1040px(좌우 두 단)에서 바뀐다.
+*/
+.home {
+  position: relative;
+  overflow: hidden;
+  /* 번지는 배경이 머리 뒤까지 이어지게 머리 높이만큼 끌어올린다 — 안 그러면 머리 아래에 띠가 생긴다 */
+  margin-top: calc(-1 * var(--header-height));
+}
+
+.home .hero {
+  padding-top: var(--header-height);
+}
+
+.home section {
+  position: relative;
+}
+
+.home .tiny {
+  font-size: var(--text-small);
+  color: var(--ink-faint);
+}
+
+.home .soft {
+  color: var(--ink-soft);
+}
+
+.home .amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.home .sub {
+  display: block;
+  font-size: var(--text-small);
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+
+/* 이름 — 금액 한 줄. 줄 사이에 선 */
+.home .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+
+.home .row:first-child {
+  border-top: 0;
+}
+
+.home .row > :first-child {
+  min-width: 0;
+}
+
+.home .lift {
+  box-shadow: var(--home-lift);
+}
+
+/* ── 번지는 배경 ──────────────────────── */
+.home .glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.home .glow i {
+  position: absolute;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(56px);
+  animation: home-drift 16s ease-in-out infinite alternate;
+}
+
+.home .glow i:nth-child(1) {
+  background: color-mix(in srgb, var(--primary) 24%, transparent);
+  left: -22%;
+  top: -12%;
+}
+
+.home .glow i:nth-child(2) {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  right: -28%;
+  top: 6%;
+  animation-delay: -5s;
+}
+
+/* 로고의 살구색이 작게 한 점 */
+.home .glow i:nth-child(3) {
+  width: 34%;
+  background: color-mix(in srgb, var(--brand-dot) 20%, transparent);
+  left: 30%;
+  bottom: -14%;
+  animation-delay: -9s;
+}
+
+@keyframes home-drift {
+  to {
+    transform: translate(6%, 8%) scale(1.12);
+  }
+}
+
+/* ── 첫 화면 ──────────────────────────── */
+.home .hero .wrap {
+  position: relative;
+  display: grid;
+  gap: 40px;
+  padding-block: var(--space-xxl) 56px;
+}
+
+.home .hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-screen);
+  min-width: 0;
+}
+
+.home .kinds {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px var(--space-md);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-size: var(--text-small);
+  color: var(--ink-soft);
+}
+
+.home .kinds li::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--dot);
+}
+
+.home .hero h1 {
+  font-size: var(--text-display-lg);
+  line-height: 1.2;
+  letter-spacing: -1.2px;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+/* 형광펜 밑줄 */
+.home .hero h1 em {
+  font-style: normal;
+  background: linear-gradient(
+    transparent 62%,
+    color-mix(in srgb, var(--primary) 24%, transparent) 0
+  );
+}
+
+.home .hero-lede {
+  font-size: var(--text-body-lg);
+  line-height: 1.45;
+  color: var(--ink-soft);
+  max-width: 34ch;
+}
+
+/* 겹친 카드 셋 — 가운데 고정비, 뒤에 여행 정산, 앞에 남은 예산 */
+.home .stage {
+  position: relative;
+  /* 위는 뒤 카드의 두 줄이, 아래는 앞 카드가 보일 만큼 비운다 */
+  padding: 64px 6px 40px;
+  min-width: 0;
+}
+
+.home .stage-main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-screen);
+  border-radius: var(--radius-sheet);
+  background: var(--surface);
+}
+
+.home .stage-back {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 64%;
+  padding: var(--space-md) var(--space-lg) 40px;
+  border-radius: var(--radius-card);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: var(--text-small);
+  font-weight: 600;
+  transform: rotate(4deg);
+}
+
+.home .stage-front {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 10px var(--space-lg);
+  border-radius: var(--radius-card);
+  background: var(--primary);
+  color: var(--primary-ink);
+  font-size: var(--text-small);
+  transform: rotate(-3deg);
+}
+
+.home .stage-front b {
+  display: block;
+  font-size: var(--text-title);
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+  9초마다 되풀이 — 관리비가 바뀌고 이유 칸이 열렸다 닫힌다.
+  가만히 선 모습(움직임 줄이기 · 첫 그림)은 바뀐 뒤다. 금액은 굴러 올라가지 않고 한 번에 바뀌어 나타난다.
+*/
+.home .swap {
+  display: grid;
+}
+
+.home .swap > span {
+  grid-area: 1 / 1;
+}
+
+.home .swap .before {
+  opacity: 0;
+  animation: home-out 9s infinite;
+}
+
+.home .swap .after,
+.home .delta {
+  animation: home-in 9s infinite;
+}
+
+.home .delta {
+  display: block;
+  font-size: var(--text-small);
+  font-weight: 400;
+  color: var(--up-ink);
+}
+
+.home .reason {
+  display: grid;
+  grid-template-rows: 1fr;
+  animation: home-open 9s infinite;
+}
+
+.home .reason > div {
+  overflow: hidden;
+}
+
+.home .reason p {
+  margin-bottom: 10px;
+  padding: 10px var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--ink-faint);
+}
+
+@keyframes home-out {
+  0%,
+  30% {
+    opacity: 1;
+  }
+  36%,
+  94% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes home-in {
+  0%,
+  30% {
+    opacity: 0;
+  }
+  36%,
+  94% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes home-open {
+  0%,
+  42% {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+  52%,
+  94% {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  100% {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+}
+
+/* ── 가계부별 이야기 ──────────────────── */
+.home .stories .wrap {
+  display: grid;
+  gap: var(--space-md);
+  padding-bottom: var(--space-md);
+}
+
+.home .story {
+  display: grid;
+  gap: var(--space-screen);
+  padding: var(--space-xl) var(--space-screen);
+  border-radius: var(--radius-sheet);
+  background: var(--surface);
+  min-width: 0;
+}
+
+.home .story[data-kind="personal"] {
+  --kind: var(--kind-personal);
+  --kind-soft: var(--kind-personal-soft);
+}
+
+.home .story[data-kind="family"] {
+  --kind: var(--kind-family);
+  --kind-soft: var(--kind-family-soft);
+}
+
+.home .story[data-kind="trip"] {
+  --kind: var(--kind-trip);
+  --kind-soft: var(--kind-trip-soft);
+}
+
+.home .story-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.home .label {
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--kind, var(--ink-faint));
+}
+
+.home .story h3,
+.home .principle h3 {
+  font-size: var(--text-headline);
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.home .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.home .tags li {
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-pill);
+  background: var(--kind-soft);
+  color: var(--kind);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.home .story-ui {
+  padding: 6px var(--space-lg);
+  border-radius: var(--radius-card);
+  background: var(--bg);
+  min-width: 0;
+}
+
+.home .big-number {
+  font-size: var(--text-display);
+  font-weight: 700;
+  letter-spacing: -0.8px;
+}
+
+/* ── 통계 · 결제 알림함 ───────────────── */
+.home .insights .wrap {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: minmax(0, 1fr);
+  padding-bottom: 56px;
+}
+
+.home .tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-screen);
+  border-radius: var(--radius-sheet);
+  background: var(--surface);
+  min-width: 0;
+  transition: transform 0.2s;
+}
+
+.home .tile:hover {
+  transform: translateY(-3px);
+}
+
+.home .tile h3 {
+  font-size: var(--home-tile-title);
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.home .charts {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-screen);
+  margin-top: var(--space-sm);
+}
+
+.home .chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  border-radius: var(--radius-card);
+  background: var(--bg);
+  min-width: 0;
+}
+
+.home .donut-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.home .donut {
+  flex: none;
+  width: 120px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.home .donut > div {
+  width: 64%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--bg);
+  display: grid;
+  place-content: center;
+  text-align: center;
+  font-size: var(--text-caption);
+  color: var(--ink-faint);
+}
+
+.home .donut b {
+  display: block;
+  font-size: var(--text-small);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.home .legend {
+  flex: 1;
+  min-width: 120px;
+  display: grid;
+  gap: var(--space-xs);
+  font-size: var(--text-small);
+  color: var(--ink-soft);
+}
+
+.home .legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.home .legend li::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot);
+}
+
+.home .legend span {
+  margin-left: auto;
+  color: var(--ink);
+}
+
+/* 막대는 한 색이다 — 평균보다 높다고 색을 바꾸지 않는다. 점선은 그려진 막대의 평균 */
+.home .bars {
+  position: relative;
+  flex: 1;
+  min-height: 96px;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.home .bars i {
+  flex: 1;
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  background: var(--primary);
+}
+
+.home .bars::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--average);
+  border-top: 1.5px dashed var(--ink-faint);
+}
+
+.home .months {
+  display: flex;
+  gap: 6px;
+  font-size: var(--text-caption);
+  color: var(--ink-faint);
+}
+
+.home .months li {
+  flex: 1;
+  text-align: center;
+}
+
+.home .inbox {
+  margin-top: auto;
+  padding: var(--space-xs) 14px;
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+}
+
+.home .inbox .row {
+  align-items: center;
+}
+
+.home .source {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* 카드사 · 은행 로고 대신 머리글자 타일 */
+.home .source > i {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: grid;
+  place-items: center;
+  font-style: normal;
+  font-weight: 700;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.home .source > span {
+  min-width: 0;
+}
+
+.home .add {
+  padding: var(--space-xxs) 10px;
+  border-radius: var(--radius-sm);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: var(--text-small);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.home .badge {
+  padding: var(--space-xxs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  color: var(--ink-soft);
+  font-size: var(--text-caption);
+  white-space: nowrap;
+}
+
+.home .switch {
+  flex: none;
+  position: relative;
+  width: 36px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+}
+
+.home .switch::after {
+  content: "";
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--primary-ink);
+}
+
+/* ── 원칙 ─────────────────────────────── */
+.home .principles .wrap {
+  display: grid;
+  gap: var(--space-md);
+  padding-bottom: 56px;
+}
+
+.home .principles h2,
+.home .care h2 {
+  font-size: var(--home-tile-title);
+  letter-spacing: -0.4px;
+  font-weight: 700;
+}
+
+.home .principles h2 {
+  padding-bottom: var(--space-xs);
+}
+
+.home .principle {
+  display: grid;
+  gap: var(--space-screen);
+  padding: var(--space-xl) var(--space-screen);
+  border-radius: var(--radius-sheet);
+  background: var(--surface);
+  min-width: 0;
+}
+
+.home .principle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.home .visual {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* 달살림이 하지 않는 말 — 줄을 그어 흐리게 */
+.home .bubbles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.home .bubbles li {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) var(--radius-xs);
+  background: var(--surface-muted);
+  color: var(--ink-faint);
+  font-size: var(--text-small);
+  text-decoration: line-through;
+}
+
+.home .bubbles li:nth-child(2) {
+  transform: rotate(-2deg);
+}
+
+.home .bubbles li:nth-child(3) {
+  transform: rotate(1.5deg);
+}
+
+.home .plain {
+  padding: var(--space-xs) 14px;
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+}
+
+.home .split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.home .box {
+  display: grid;
+  align-content: start;
+  gap: var(--space-xs);
+  padding: var(--space-md) 14px;
+  border-radius: var(--radius-lg);
+  background: var(--kind-soft);
+  font-size: var(--text-small);
+  color: var(--ink-soft);
+}
+
+.home .box[data-kind="personal"] {
+  --kind: var(--kind-personal);
+  --kind-soft: var(--kind-personal-soft);
+}
+
+.home .box[data-kind="family"] {
+  --kind: var(--kind-family);
+  --kind-soft: var(--kind-family-soft);
+}
+
+.home .box b {
+  font-weight: 600;
+  color: var(--kind);
+}
+
+.home .box .line {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.home .box .why {
+  color: var(--ink-faint);
+}
+
+.home .options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.home .options li {
+  padding: 6px var(--space-md);
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius-pill);
+  color: var(--ink-soft);
+  font-size: var(--text-small);
+}
+
+.home .options li[data-core] {
+  border-style: solid;
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-ink);
+  font-weight: 600;
+}
+
+/* ── 내 정보 ──────────────────────────── */
+.home .care .wrap {
+  padding-bottom: 56px;
+}
+
+.home .care-card {
+  display: grid;
+  gap: var(--space-screen);
+  padding: 28px var(--space-screen);
+  border-radius: var(--radius-sheet);
+  background: var(--surface);
+}
+
+.home .care ul {
+  display: grid;
+  gap: var(--space-md);
+  color: var(--ink-soft);
+}
+
+.home .care li {
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--line);
+}
+
+.home .care li strong {
+  display: block;
+  color: var(--ink);
+}
+
+.home .care a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── 끝 인사 ──────────────────────────── */
+.home .closing .wrap {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-lg);
+  padding-block: 40px 64px;
+  text-align: center;
+}
+
+.home .closing svg {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+}
+
+.home .closing h2 {
+  font-size: var(--text-display);
+  letter-spacing: -0.8px;
+  font-weight: 700;
+}
+
+.home .closing .actions {
+  justify-content: center;
+}
+
+@media (min-width: 760px) {
+  .home .hero .wrap {
+    padding-block: 48px 64px;
+  }
+
+  .home .hero h1 {
+    font-size: var(--home-title-md);
+    letter-spacing: -1.6px;
+  }
+
+  .home .stage {
+    max-width: 440px;
+  }
+
+  .home .story,
+  .home .principle {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-xxl);
+    padding: var(--space-xxl);
+  }
+
+  /* 줄마다 글과 그림의 자리가 바뀐다 */
+  .home .story:nth-of-type(even) .story-ui {
+    order: -1;
+  }
+
+  .home .story h3,
+  .home .principle h3 {
+    font-size: var(--text-display);
+  }
+
+  .home .insights .wrap {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .home .tile[data-tile="stats"] {
+    grid-column: span 4;
+  }
+
+  .home .tile[data-tile="inbox"] {
+    grid-column: span 2;
+  }
+
+  .home .care-card {
+    padding: 36px var(--space-xxl);
+  }
+
+  .home .care ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-xl);
+  }
+}
+
+@media (min-width: 1040px) {
+  .home .hero .wrap {
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    padding-block: 64px 80px;
+  }
+
+  .home .hero h1 {
+    font-size: var(--home-title-lg);
+    letter-spacing: -2px;
+  }
+
+  .home .stage {
+    max-width: none;
+  }
+
+  .home .story,
+  .home .principle {
+    gap: 48px;
+    padding: 40px;
+  }
+
+  .home .insights .wrap,
+  .home .principles .wrap,
+  .home .care .wrap {
+    padding-bottom: 80px;
+  }
+}

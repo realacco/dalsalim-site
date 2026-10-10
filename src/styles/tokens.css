@@ -86,6 +86,8 @@
   --width-site: 1040px;
   --width-text: 720px;
   --width-shot: 320px;
+  /* 머리의 높이 — 버튼 36 + 위아래 여백 14 */
+  --header-height: 64px;
 
   /* 홈 전용 — 큰 제목과 떠 있는 카드. 다른 페이지에서 빌려 쓰지 않는다 */
   --home-title-md: 48px;
