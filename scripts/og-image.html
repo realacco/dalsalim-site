@@ -1,0 +1,112 @@
+<!doctype html>
+<!--
+  공유 미리보기 그림(src/app/opengraph-image.png)의 원본.
+  브라우저에서 1200×630 으로 열어 찍는다. 글꼴은 node_modules 의 Pretendard 를 읽으므로 `npm install` 뒤에 연다.
+  문구를 고치면 다시 찍어 그림을 바꾼다.
+-->
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="../node_modules/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css"
+    />
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+      body {
+        position: relative;
+        background: #f5f7fa;
+        color: #16181d;
+        font-family: "Pretendard Variable", sans-serif;
+      }
+      .glow i {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+      }
+      .glow i:nth-child(1) {
+        width: 720px;
+        height: 720px;
+        left: -220px;
+        top: -260px;
+        background: rgba(25, 102, 240, 0.3);
+      }
+      .glow i:nth-child(2) {
+        width: 620px;
+        height: 620px;
+        right: -200px;
+        top: 120px;
+        background: rgba(25, 102, 240, 0.18);
+      }
+      .glow i:nth-child(3) {
+        width: 300px;
+        height: 300px;
+        left: 520px;
+        bottom: -120px;
+        background: rgba(243, 182, 126, 0.32);
+      }
+      main {
+        position: relative;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 80px 88px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: 40px;
+        font-weight: 800;
+      }
+      .brand svg {
+        width: 72px;
+        height: 72px;
+        border-radius: 18px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 92px;
+        line-height: 1.18;
+        letter-spacing: -3px;
+        font-weight: 800;
+      }
+      h1 em {
+        font-style: normal;
+        background: linear-gradient(transparent 62%, rgba(25, 102, 240, 0.24) 0);
+      }
+      p {
+        margin: 28px 0 0;
+        font-size: 34px;
+        color: #58606e;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="glow"><i></i><i></i><i></i></div>
+    <main>
+      <div class="brand">
+        <svg viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" fill="#1966f0" />
+          <rect x="276" y="276" width="214" height="214" rx="54" fill="#fff" />
+          <circle cx="640" cy="383" r="107" fill="#f3b67e" />
+          <rect x="276" y="533" width="214" height="214" rx="54" fill="#fff" />
+          <rect x="533" y="533" width="214" height="214" rx="54" fill="#fff" />
+        </svg>
+        달살림
+      </div>
+      <div>
+        <h1>살림을 한곳에 적는<br /><em>종합 가계부</em></h1>
+        <p>내 가계부 · 가족 가계부 · 여행 가계부를 한 앱에서</p>
+      </div>
+    </main>
+  </body>
+</html>

@@ -23,6 +23,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: useCase.title,
     description: useCase.summary,
     alternates: { canonical: `/use/${useCase.slug}/` },
+    openGraph: {
+      type: "article",
+      title: useCase.title,
+      description: useCase.summary,
+      url: `/use/${useCase.slug}/`,
+    },
   };
 }
 

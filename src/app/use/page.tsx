@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description:
     "달살림을 어떤 집이 어떻게 쓰는지 소개해요. 맞벌이 부부의 고정비, 혼자 쓰는 내 가계부, 여럿이 간 여행 정산.",
   alternates: { canonical: "/use/" },
+  openGraph: { title: "활용 — 달살림", url: "/use/" },
 };
 
 export default function UseIndexPage() {
