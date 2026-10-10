@@ -9,7 +9,7 @@ import { Stories } from "@/components/home/Stories";
 
 export default function HomePage() {
   return (
-    <div className="home">
+    <div className="home mock">
       <Hero />
       <Stories />
       <Insights />

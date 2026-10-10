@@ -20,47 +20,6 @@
   position: relative;
 }
 
-.home .tiny {
-  font-size: var(--text-small);
-  color: var(--ink-faint);
-}
-
-.home .soft {
-  color: var(--ink-soft);
-}
-
-.home .amount {
-  font-variant-numeric: tabular-nums;
-  font-weight: 600;
-  text-align: right;
-  white-space: nowrap;
-}
-
-.home .sub {
-  display: block;
-  font-size: var(--text-small);
-  font-weight: 400;
-  color: var(--ink-faint);
-}
-
-/* 이름 — 금액 한 줄. 줄 사이에 선 */
-.home .row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--space-md);
-  padding: 10px 0;
-  border-top: 1px solid var(--line);
-}
-
-.home .row:first-child {
-  border-top: 0;
-}
-
-.home .row > :first-child {
-  min-width: 0;
-}
-
 .home .lift {
   box-shadow: var(--home-lift);
 }

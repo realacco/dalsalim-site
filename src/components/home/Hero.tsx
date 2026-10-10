@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { PlatformStatus } from "@/components/PlatformStatus";
 
 import { won } from "./format";
@@ -25,6 +27,9 @@ export function Hero() {
           </h1>
           <p className="hero-lede">내 가계부, 가족 가계부, 여행 가계부를 한 앱에서 적어요.</p>
           <PlatformStatus />
+          <Link href="/use/" className="btn btn-ghost">
+            어떻게 쓰는지 보기 ›
+          </Link>
         </div>
 
         {/* 꾸미는 그림이다. 읽어 주는 도구에는 한 문장으로만 전한다 */}
