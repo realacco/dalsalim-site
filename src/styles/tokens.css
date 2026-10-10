@@ -1,0 +1,156 @@
+/*
+  디자인 토큰.
+
+  색 · 간격 · 모서리 · 글자 크기는 달살림 앱의 값을 옮겨 적은 것이다 — 거의 흰 바탕에 파랑 하나로 강조하고,
+  어둡게는 남색기를 뺀 숯색이다. 앱의 색이 바뀌면 여기도 같이 고친다 (두 저장소를 잇는 자동 검사는 없다).
+
+  ★ 색은 반드시 이 파일의 변수로만 쓴다. 컴포넌트에 hex 를 직접 적으면 어둡게에서 깨진다.
+
+  테마는 세 상태다 — 기기 설정을 따르거나(속성 없음), 사람이 고른 `data-theme="light" | "dark"`.
+*/
+:root {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface-muted: #eaeef3;
+  --surface-pressed: #e6ecf4;
+
+  --ink: #16181d;
+  --ink-soft: #58606e;
+  --ink-faint: #6d7786;
+
+  --line: #e8edf3;
+  --line-strong: #d4dbe4;
+
+  --primary: #1966f0;
+  --primary-soft: #eef4ff;
+  --primary-ink: #ffffff;
+
+  /* 지난달보다 늘어난 금액의 글자. 지출 자체에는 쓰지 않는다 */
+  --up-ink: #c23a33;
+
+  /* 가계부 종류 — 내(파랑) · 가족(살구) · 여행(하늘). 종류를 가를 뿐 상태를 말하지 않는다 */
+  --kind-personal: #1966f0;
+  --kind-personal-soft: #eef4ff;
+  --kind-family: #a85a17;
+  --kind-family-soft: #fbebdc;
+  --kind-trip: #1d6f9c;
+  --kind-trip-soft: #dceef8;
+
+  /* 도넛 조각 — 분류의 색이 아니라 큰 순서 자리의 색이다. 붉은색 · 초록색 계열이 없다 */
+  --slice-1: #2b68e8;
+  --slice-2: #e07b18;
+  --slice-3: #0092b4;
+  --slice-4: #c93c7e;
+  --slice-5: #7349ce;
+
+  /* 로고 — 브랜드 색이라 밝게 · 어둡게가 같다 */
+  --brand: #1966f0;
+  --brand-cell: #ffffff;
+  --brand-dot: #f3b67e;
+
+  --space-xxs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+  --space-screen: 20px;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-card: 20px;
+  --radius-sheet: 28px;
+  --radius-pill: 999px;
+
+  --font-sans:
+    "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --text-caption: 12px;
+  --text-small: 13px;
+  --text-body: 15px;
+  --text-body-lg: 17px;
+  --text-title: 20px;
+  --text-headline: 24px;
+  --text-display: 30px;
+  --text-display-lg: 38px;
+
+  /*
+    웹에만 있는 값 — 앱에는 폭이 없다.
+    배치가 바뀌는 폭은 760px(세 칸) · 1040px(좌우 두 단)이다. 미디어 쿼리에는 변수를 못 써서 숫자로 적는다.
+  */
+  --width-site: 1040px;
+  --width-text: 720px;
+  --width-shot: 320px;
+
+  /* 홈 전용 — 큰 제목과 떠 있는 카드. 다른 페이지에서 빌려 쓰지 않는다 */
+  --home-title-md: 48px;
+  --home-title-lg: 60px;
+  --home-tile-title: 22px;
+  --home-lift: 0 18px 40px -18px color-mix(in srgb, var(--ink) 32%, transparent);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1217;
+    --surface: #171c23;
+    --surface-muted: #1f262f;
+    --surface-pressed: #27303b;
+    --ink: #ecf0f5;
+    --ink-soft: #a2adbb;
+    --ink-faint: #8a94a3;
+    --line: #242c36;
+    --line-strong: #343e4a;
+    --primary: #5b93ff;
+    --primary-soft: #16294a;
+    --primary-ink: #0e1217;
+    --up-ink: #ff8a8f;
+    --kind-personal: #5b93ff;
+    --kind-personal-soft: #16294a;
+    --kind-family: #f3b67e;
+    --kind-family-soft: #3a2a1c;
+    --kind-trip: #7cc6ee;
+    --kind-trip-soft: #15324a;
+    --slice-1: #6d92f5;
+    --slice-2: #d2761c;
+    --slice-3: #1c9dc0;
+    --slice-4: #d3568c;
+    --slice-5: #8f67de;
+    color-scheme: dark;
+  }
+}
+
+/* 위 블록과 같은 값이다 — 사람이 [어둡게]를 고르면 기기 설정이 밝게여도 이쪽이 이긴다 */
+:root[data-theme="dark"] {
+  --bg: #0e1217;
+  --surface: #171c23;
+  --surface-muted: #1f262f;
+  --surface-pressed: #27303b;
+  --ink: #ecf0f5;
+  --ink-soft: #a2adbb;
+  --ink-faint: #8a94a3;
+  --line: #242c36;
+  --line-strong: #343e4a;
+  --primary: #5b93ff;
+  --primary-soft: #16294a;
+  --primary-ink: #0e1217;
+  --up-ink: #ff8a8f;
+  --kind-personal: #5b93ff;
+  --kind-personal-soft: #16294a;
+  --kind-family: #f3b67e;
+  --kind-family-soft: #3a2a1c;
+  --kind-trip: #7cc6ee;
+  --kind-trip-soft: #15324a;
+  --slice-1: #6d92f5;
+  --slice-2: #d2761c;
+  --slice-3: #1c9dc0;
+  --slice-4: #d3568c;
+  --slice-5: #8f67de;
+  color-scheme: dark;
+}
