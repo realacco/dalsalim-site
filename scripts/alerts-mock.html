@@ -1,0 +1,355 @@
+<!doctype html>
+<!--
+  결제 알림함 글(/use/payment-alerts/)에 싣는 그림 세 장의 원본.
+
+  이 화면들은 앱에서 찍을 수 없다 — 실제 화면에는 폰에 깔린 카드사 · 은행 앱의 이름과 아이콘이 뜬다.
+  그래서 앱 화면의 구성과 문구를 본떠 그리고, 이름은 지어낸 것(K은행 · S카드 …)으로, 아이콘은 머리글자 타일로 바꿨다.
+  브라우저에서 열어 .screen 하나씩을 폭 720 으로 찍는다. 글꼴은 node_modules 의 Pretendard 를 읽는다.
+-->
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="../node_modules/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css"
+    />
+    <style>
+      :root {
+        --bg: #f5f7fa;
+        --surface: #fff;
+        --muted: #eaeef3;
+        --ink: #16181d;
+        --soft: #58606e;
+        --faint: #6d7786;
+        --line: #e8edf3;
+        --primary: #1966f0;
+        --primary-soft: #eef4ff;
+      }
+      body {
+        margin: 0;
+        display: flex;
+        gap: 24px;
+        align-items: flex-start;
+        background: #888;
+        font-family: "Pretendard Variable", sans-serif;
+        font-size: 15px;
+        line-height: 1.45;
+        color: var(--ink);
+      }
+      .screen {
+        flex: none;
+        width: 450px;
+        background: var(--bg);
+        padding: 12px 20px 28px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .bar {
+        display: grid;
+        grid-template-columns: 32px 1fr 32px;
+        align-items: center;
+        height: 48px;
+        font-size: 17px;
+        font-weight: 700;
+        text-align: center;
+      }
+      .bar i,
+      .ledger i {
+        font-style: normal;
+        font-size: 24px;
+        font-weight: 400;
+        text-align: left;
+      }
+      .ledger {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        height: 48px;
+        font-size: 22px;
+        font-weight: 800;
+      }
+      .ledger span {
+        margin-left: auto;
+        font-size: 14px;
+        font-weight: 600;
+        background: var(--surface);
+        border-radius: 999px;
+        padding: 8px 14px;
+      }
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        background: var(--muted);
+        border-radius: 999px;
+        padding: 5px;
+        font-size: 15px;
+        color: var(--soft);
+        text-align: center;
+      }
+      .tabs b {
+        font-weight: 400;
+        padding: 10px 0;
+        border-radius: 999px;
+      }
+      .tabs .on {
+        background: var(--surface);
+        color: var(--ink);
+        font-weight: 700;
+      }
+      .tools {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+      .tools span {
+        background: var(--muted);
+        border-radius: 999px;
+        padding: 7px 14px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .card {
+        background: var(--surface);
+        border-radius: 20px;
+        padding: 16px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .card h3 {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--faint);
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 44px;
+      }
+      .row + .row {
+        border-top: 1px solid var(--line);
+        padding-top: 10px;
+      }
+      .row > :last-child {
+        margin-left: auto;
+      }
+      .tile {
+        flex: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        background: var(--primary-soft);
+        color: var(--primary);
+      }
+      .sw {
+        flex: none;
+        position: relative;
+        width: 46px;
+        height: 26px;
+        border-radius: 999px;
+        background: #c9d1dc;
+      }
+      .sw::after {
+        content: "";
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #fff;
+      }
+      .sw.on {
+        background: var(--primary);
+      }
+      .sw.on::after {
+        left: 23px;
+      }
+      .note {
+        margin: 0;
+        font-size: 13px;
+        color: var(--faint);
+      }
+      .desc {
+        margin: 0;
+        font-size: 14px;
+        color: var(--soft);
+      }
+      .btn {
+        display: grid;
+        place-items: center;
+        min-height: 44px;
+        padding: 0 16px;
+        border-radius: 14px;
+        background: var(--muted);
+        font-weight: 600;
+      }
+      .btn.primary {
+        background: var(--primary);
+        color: #fff;
+      }
+      .btn.off {
+        opacity: 0.4;
+      }
+      .date {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 4px 0 -4px;
+      }
+      .from {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: var(--faint);
+      }
+      .amount {
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+      .field {
+        display: grid;
+        grid-template-columns: 44px 1fr;
+        gap: 8px;
+        align-items: start;
+        font-size: 14px;
+      }
+      .field > span:first-child {
+        color: var(--faint);
+        padding-top: 6px;
+      }
+      .field > span:last-child {
+        padding-top: 6px;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .chips span {
+        border: 1.5px solid var(--line);
+        border-radius: 999px;
+        padding: 5px 12px;
+      }
+      .chips .on {
+        border-color: var(--primary);
+        color: var(--primary);
+        font-weight: 600;
+      }
+      .need {
+        color: var(--faint);
+        font-size: 13px;
+      }
+      .acts {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1.4fr;
+        gap: 8px;
+        margin-top: 4px;
+      }
+      .input {
+        flex: 1;
+        min-height: 44px;
+        border: 1.5px solid var(--line);
+        border-radius: 14px;
+        background: var(--surface);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 1. 모을 앱 — K은행만 남기고 나머지를 끈 모습 -->
+    <div class="screen" id="apps">
+      <div class="bar"><i>‹</i>모을 앱<span></span></div>
+      <div class="card">
+        <h3>자동 추가</h3>
+        <div class="row"><span>꺼짐</span><span class="btn">자동 추가 설정</span></div>
+      </div>
+      <div class="card">
+        <h3>카드</h3>
+        <div class="row"><span class="tile">S</span>S카드<span class="sw"></span></div>
+        <div class="row"><span class="tile">H</span>H카드<span class="sw"></span></div>
+      </div>
+      <div class="card">
+        <h3>페이</h3>
+        <div class="row"><span class="tile">N</span>N페이<span class="sw"></span></div>
+      </div>
+      <div class="card">
+        <h3>은행</h3>
+        <div class="row"><span class="tile">K</span>K은행<span class="sw on"></span></div>
+        <div class="row"><span class="tile">W</span>W은행<span class="sw"></span></div>
+      </div>
+      <p class="note">꺼도 이미 알림함에 쌓인 것은 그대로예요.</p>
+    </div>
+
+    <!-- 2. 알림함 — K은행 결제가 쌓인 모습 -->
+    <div class="screen" id="inbox">
+      <div class="ledger"><i>‹</i>나<span>정기</span></div>
+      <div class="tabs"><b>내역</b><b>통계</b><b>자산</b><b class="on">알림함</b></div>
+      <div class="tools"><span>모을 앱</span><span>붙여넣기</span></div>
+      <p class="date">10월 11일 (일)</p>
+      <div class="card">
+        <div class="from"><span>K은행 · 알림</span><span>오후 12:40</span></div>
+        <div class="amount">8,900원</div>
+        <div class="field"><span>메모</span><span>별빛마트</span></div>
+        <div class="field">
+          <span>분류</span>
+          <div class="chips">
+            <span class="on">식비</span><span>교통</span><span>생활</span><span>여가</span
+            ><span>쇼핑</span><span>전체 18</span>
+          </div>
+        </div>
+        <div class="acts">
+          <span class="btn">수정</span><span class="btn">삭제</span
+          ><span class="btn primary">추가</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="from"><span>K은행 · 알림</span><span>오전 8:15</span></div>
+        <div class="amount">4,500원</div>
+        <div class="field"><span>메모</span><span>동네빵집</span></div>
+        <div class="field">
+          <span>분류</span>
+          <div class="chips">
+            <span>식비</span><span>교통</span><span>생활</span><span>여가</span><span>쇼핑</span
+            ><span>전체 18</span>
+          </div>
+        </div>
+        <span class="need">선택 필요</span>
+        <div class="acts">
+          <span class="btn">수정</span><span class="btn">삭제</span
+          ><span class="btn primary off">추가</span>
+        </div>
+      </div>
+      <p class="note">
+        이 기기에만 보관해요 · 최근 300건까지, 쌓인 지 30일이 지나면 먼저 들어온 것부터 지워져요.
+      </p>
+    </div>
+
+    <!-- 3. 자동 추가 — K은행을 켠 모습 -->
+    <div class="screen" id="auto">
+      <div class="bar"><i>‹</i>자동 추가<span></span></div>
+      <div class="card">
+        <h3>자동으로 추가할 곳</h3>
+        <p class="desc">
+          켠 곳의 결제는 알림함을 거치지 않고 바로 기록돼요. 분류는 「기타」로 들어가니 내역에서
+          고쳐주세요. 켠 뒤에 온 알림부터예요.
+        </p>
+        <div class="row"><span class="tile">K</span>K은행<span class="sw on"></span></div>
+      </div>
+      <div class="card">
+        <h3>이 글자가 들어간 결제만</h3>
+        <p class="desc">
+          비워 두면 켠 곳의 결제를 전부 자동으로 추가해요. 입력해 두면 그중 하나가 들어간 결제만
+          추가하고 나머지는 알림함에 남아요.
+        </p>
+        <div class="row"><span class="input"></span><span class="btn">추가</span></div>
+      </div>
+    </div>
+  </body>
+</html>

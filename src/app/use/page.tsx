@@ -3,12 +3,12 @@ import "./use.css";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { KIND_LABEL, USE_CASES } from "@/content/use";
+import { labelOf, USE_CASES } from "@/content/use";
 
 export const metadata: Metadata = {
   title: "활용",
   description:
-    "달살림을 어떤 집이 어떻게 쓰는지 소개해요. 맞벌이 부부의 고정비, 혼자 쓰는 내 가계부, 여럿이 간 여행 정산.",
+    "달살림을 어떤 집이 어떻게 쓰는지 소개해요. 맞벌이 부부의 고정비, 결혼 준비에 쓴 돈 모아 보기, 구독료 챙기기, 여럿이 간 여행 정산.",
   alternates: { canonical: "/use/" },
   openGraph: { title: "활용 — 달살림", url: "/use/" },
 };
@@ -25,7 +25,7 @@ export default function UseIndexPage() {
           {USE_CASES.map((useCase) => (
             <li key={useCase.slug} data-kind={useCase.kind}>
               <Link href={`/use/${useCase.slug}/`} className="card">
-                <span className="kind">{KIND_LABEL[useCase.kind]}</span>
+                <span className="kind">{labelOf(useCase)}</span>
                 <h2>{useCase.title}</h2>
                 <p>{useCase.summary}</p>
               </Link>

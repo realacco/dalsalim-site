@@ -100,14 +100,14 @@ export function Stories() {
           </div>
           <div className="story-ui" aria-hidden="true">
             <div className="row">
-              <span>라멘</span>
+              <span>식비</span>
               <span className="amount">
                 ¥1,800
                 <span className="sub">약 {won(16_900)}</span>
               </span>
             </div>
             <div className="row">
-              <span>전철</span>
+              <span>교통</span>
               <span className="amount">
                 ¥460
                 <span className="sub">약 {won(4_300)}</span>

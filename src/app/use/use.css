@@ -125,16 +125,38 @@
   list-style: disc;
 }
 
-.use .example {
+/*
+  앱 화면 사진. 밝은 화면만 찍어 두어서 어두운 테마에서는 사진만 밝다 — 테두리와 둥근 모서리로 한 장의 사진임을 보인다.
+  폭은 폰 화면을 넘지 않게 멈춘다. 사진이 둘이면 넓은 화면에서 나란히 선다.
+*/
+.use .shots {
   display: grid;
-  gap: var(--space-xs);
-  padding: var(--space-lg) var(--space-screen) 6px;
+  /* 한 줄에 둘까지 — 셋이 서면 사진 속 글자를 읽을 수 없다 */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-xl) var(--space-lg);
+  margin-top: var(--space-sm);
+}
+
+.use .shot {
+  margin: 0;
+  max-width: var(--width-shot);
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
+}
+
+.use .shot img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-card);
   background: var(--surface);
 }
 
-.use .example .delta {
-  color: var(--up-ink);
+.use .shot figcaption {
+  font-size: var(--text-small);
+  line-height: 1.5;
+  color: var(--ink-faint);
 }
 
 .use .more {
@@ -185,7 +207,7 @@
   }
 
   .use .cards {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 
   /* 목록은 세 칸이라 본문 폭이 아니라 사이트 폭을 쓴다 */
