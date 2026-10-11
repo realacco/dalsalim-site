@@ -240,6 +240,50 @@ a.btn-ghost:hover {
   border: 0;
 }
 
+/*
+  ── 화면 그림 ──────────────────────────
+  앱 화면을 HTML 로 그린 조각이 같이 쓰는 모양. 이름 — 금액 한 줄, 줄 사이에 선.
+*/
+.mock .tiny {
+  font-size: var(--text-small);
+  color: var(--ink-faint);
+}
+
+.mock .soft {
+  color: var(--ink-soft);
+}
+
+.mock .amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.mock .sub {
+  display: block;
+  font-size: var(--text-small);
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+
+.mock .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+
+.mock .row:first-child {
+  border-top: 0;
+}
+
+.mock .row > :first-child {
+  min-width: 0;
+}
+
 /* ── 안내 페이지 (없는 주소 등) ─────────── */
 .notice-page {
   padding-block: 56px 80px;

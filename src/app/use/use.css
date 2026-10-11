@@ -1,0 +1,200 @@
+/*
+  활용 — 목록과 글.
+
+  홈과 달리 조용하다. 읽는 글이라 줄이 본문 폭(720)을 넘지 않고, 창이 넓어지면 양옆 여백만 는다.
+*/
+.use {
+  padding-block: var(--space-xxl) 80px;
+}
+
+.use .wrap {
+  max-width: calc(var(--width-text) + 2 * var(--space-screen));
+  display: grid;
+  gap: var(--space-xxl);
+}
+
+.use [data-kind="personal"] {
+  --kind: var(--kind-personal);
+  --kind-soft: var(--kind-personal-soft);
+}
+
+.use [data-kind="family"] {
+  --kind: var(--kind-family);
+  --kind-soft: var(--kind-family-soft);
+}
+
+.use [data-kind="trip"] {
+  --kind: var(--kind-trip);
+  --kind-soft: var(--kind-trip-soft);
+}
+
+.use .kind {
+  justify-self: start;
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-pill);
+  background: var(--kind-soft);
+  color: var(--kind);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.use header {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.use h1 {
+  font-size: var(--text-display);
+  line-height: 1.25;
+  letter-spacing: -0.8px;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.use .lede {
+  font-size: var(--text-body-lg);
+  color: var(--ink-soft);
+}
+
+/* ── 목록 ─────────────────────────────── */
+.use .cards {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.use .card {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-xl) var(--space-screen);
+  border-radius: var(--radius-sheet);
+  background: var(--surface);
+  transition: transform 0.2s;
+}
+
+.use .card:hover {
+  transform: translateY(-2px);
+}
+
+.use .card h2 {
+  font-size: var(--text-title);
+  letter-spacing: -0.3px;
+  font-weight: 700;
+}
+
+.use .card p {
+  color: var(--ink-soft);
+}
+
+/* ── 글 ───────────────────────────────── */
+.use .crumb {
+  font-size: var(--text-small);
+  color: var(--ink-faint);
+}
+
+.use .crumb a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.use .body {
+  display: grid;
+  gap: var(--space-md);
+  color: var(--ink-soft);
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+}
+
+.use .body section {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.use .body h2 {
+  margin-top: var(--space-lg);
+  font-size: var(--text-title);
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.use .body ul {
+  display: grid;
+  gap: 6px;
+  padding-left: var(--space-screen);
+  list-style: disc;
+}
+
+.use .example {
+  display: grid;
+  gap: var(--space-xs);
+  padding: var(--space-lg) var(--space-screen) 6px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.use .example .delta {
+  color: var(--up-ink);
+}
+
+.use .more {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.use .more h2 {
+  font-size: var(--text-body-lg);
+  font-weight: 700;
+}
+
+.use .list {
+  padding: var(--space-sm) var(--space-screen);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.use .list a {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  border-top: 1px solid var(--line);
+}
+
+.use .list li:first-child a {
+  border-top: 0;
+}
+
+.use .list a::after {
+  content: "›";
+  color: var(--ink-faint);
+}
+
+.use .list a:hover {
+  color: var(--primary);
+}
+
+@media (min-width: 760px) {
+  .use {
+    padding-block: 48px 96px;
+  }
+
+  .use h1 {
+    font-size: var(--text-display-lg);
+    letter-spacing: -1.2px;
+  }
+
+  .use .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* 목록은 세 칸이라 본문 폭이 아니라 사이트 폭을 쓴다 */
+  .use[data-page="index"] .wrap {
+    max-width: var(--width-site);
+  }
+
+  .use .card {
+    padding: var(--space-xl);
+    align-content: start;
+  }
+}
