@@ -1,0 +1,239 @@
+/* 첫 화면 — 큰 제목과 겹친 카드 셋. 가운데 카드의 예시는 9초마다 바뀐다. */
+.home .hero {
+  padding-top: var(--header-height);
+}
+
+.home .hero .wrap {
+  position: relative;
+  display: grid;
+  gap: 40px;
+  padding-block: var(--space-xxl) 56px;
+}
+
+.home .hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-screen);
+  min-width: 0;
+}
+
+.home .kinds {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px var(--space-md);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-size: var(--text-small);
+  color: var(--ink-soft);
+}
+
+.home .kinds li::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--dot);
+}
+
+.home .hero h1 {
+  font-size: var(--text-display-lg);
+  line-height: 1.2;
+  letter-spacing: -1.2px;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+/* 형광펜 밑줄 */
+.home .hero h1 em {
+  font-style: normal;
+  background: linear-gradient(
+    transparent 62%,
+    color-mix(in srgb, var(--primary) 24%, transparent) 0
+  );
+}
+
+.home .hero-lede {
+  font-size: var(--text-body-lg);
+  line-height: 1.45;
+  color: var(--ink-soft);
+  max-width: 34ch;
+}
+
+/* 겹친 카드 셋 — 가운데 고정비, 뒤에 여행 정산, 앞에 남은 예산 */
+.home .stage {
+  position: relative;
+  /* 위는 뒤 카드의 두 줄이, 아래는 앞 카드가 보일 만큼 비운다 */
+  padding: 64px 6px 40px;
+  min-width: 0;
+}
+
+.home .stage-main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-screen);
+  border-radius: var(--radius-sheet);
+  background: var(--surface);
+}
+
+.home .stage-back {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 64%;
+  padding: var(--space-md) var(--space-lg) 40px;
+  border-radius: var(--radius-card);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: var(--text-small);
+  font-weight: 600;
+  transform: rotate(4deg);
+}
+
+.home .stage-front {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 10px var(--space-lg);
+  border-radius: var(--radius-card);
+  background: var(--primary);
+  color: var(--primary-ink);
+  font-size: var(--text-small);
+  transform: rotate(-3deg);
+}
+
+.home .stage-front b {
+  display: block;
+  font-size: var(--text-title);
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+  9초마다 되풀이 — 관리비가 바뀌고 이유 칸이 열렸다 닫힌다.
+  가만히 선 모습(움직임 줄이기 · 첫 그림)은 바뀐 뒤다. 금액은 굴러 올라가지 않고 한 번에 바뀌어 나타난다.
+*/
+.home .swap {
+  display: grid;
+}
+
+.home .swap > span {
+  grid-area: 1 / 1;
+}
+
+.home .swap .before {
+  opacity: 0;
+  animation: home-out 9s infinite;
+}
+
+.home .swap .after,
+.home .delta {
+  animation: home-in 9s infinite;
+}
+
+.home .delta {
+  display: block;
+  font-size: var(--text-small);
+  font-weight: 400;
+  color: var(--up-ink);
+}
+
+.home .reason {
+  display: grid;
+  grid-template-rows: 1fr;
+  animation: home-open 9s infinite;
+}
+
+.home .reason > div {
+  overflow: hidden;
+}
+
+.home .reason p {
+  margin-bottom: 10px;
+  padding: 10px var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--ink-faint);
+}
+
+@keyframes home-out {
+  0%,
+  30% {
+    opacity: 1;
+  }
+  36%,
+  94% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes home-in {
+  0%,
+  30% {
+    opacity: 0;
+  }
+  36%,
+  94% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes home-open {
+  0%,
+  42% {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+  52%,
+  94% {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  100% {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+}
+
+@media (min-width: 760px) {
+  .home .hero .wrap {
+    padding-block: 48px 64px;
+  }
+
+  .home .hero h1 {
+    font-size: var(--home-title-md);
+    letter-spacing: -1.6px;
+  }
+
+  .home .stage {
+    max-width: 440px;
+  }
+}
+
+@media (min-width: 1040px) {
+  .home .hero .wrap {
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    padding-block: 64px 80px;
+  }
+
+  .home .hero h1 {
+    font-size: var(--home-title-lg);
+    letter-spacing: -2px;
+  }
+
+  .home .stage {
+    max-width: none;
+  }
+}

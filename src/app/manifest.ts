@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { SITE } from "@/config/site";
+import { META_COLORS } from "@/config/theme";
 
 export const dynamic = "force-static";
 
@@ -13,8 +14,8 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "ko",
     start_url: "/",
     display: "browser",
-    background_color: "#f5f7fa",
-    theme_color: "#1966f0",
+    background_color: META_COLORS.bgLight,
+    theme_color: META_COLORS.brand,
     icons: [{ src: "/icon.png", sizes: "1024x1024", type: "image/png" }],
   };
 }

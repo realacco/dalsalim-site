@@ -1,4 +1,6 @@
-import { won } from "./format";
+import "./principles.css";
+
+import { won } from "@/lib/format";
 
 /** 달살림이 지키는 것 셋. 원칙마다 글과 작은 그림이 한 면에 있다 */
 export function Principles() {

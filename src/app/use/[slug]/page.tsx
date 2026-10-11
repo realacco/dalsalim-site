@@ -4,7 +4,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { findUseCase, KIND_LABEL, USE_CASES } from "@/content/use";
+import { JsonLd } from "@/components/JsonLd";
+import { Shot } from "@/components/Shot";
+import { ROUTES, USE_FIGURE_DIR } from "@/config/routes";
+import { SITE } from "@/config/site";
+import { findUseCase, labelOf, USE_CASES } from "@/content/use";
+import { pageMetadata } from "@/lib/metadata";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -19,17 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const useCase = findUseCase(slug);
   if (!useCase) return {};
-  return {
+  return pageMetadata({
     title: useCase.title,
     description: useCase.summary,
-    alternates: { canonical: `/use/${useCase.slug}/` },
-    openGraph: {
-      type: "article",
-      title: useCase.title,
-      description: useCase.summary,
-      url: `/use/${useCase.slug}/`,
-    },
-  };
+    path: ROUTES.article(useCase.slug),
+    type: "article",
+  });
 }
 
 export default async function UseCasePage({ params }: Props) {
@@ -38,13 +38,42 @@ export default async function UseCasePage({ params }: Props) {
   if (!useCase) notFound();
 
   const others = USE_CASES.filter((other) => other.slug !== useCase.slug);
+  const url = `${SITE.url}${ROUTES.article(useCase.slug)}`;
+  const firstFigure = useCase.sections.flatMap((section) => section.figures ?? [])[0];
 
   return (
-    <article className="use mock" data-kind={useCase.kind}>
+    <article className="use" data-kind={useCase.kind}>
+      <JsonLd
+        data={{
+          "@type": "Article",
+          headline: useCase.title,
+          description: useCase.summary,
+          inLanguage: "ko",
+          mainEntityOfPage: url,
+          ...(firstFigure ? { image: `${SITE.url}${USE_FIGURE_DIR}/${firstFigure.file}.png` } : {}),
+          publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
+        }}
+      />
+      {/* 검색 결과에 「달살림 › 활용 › 글」 경로가 보이게 */}
+      <JsonLd
+        data={{
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: SITE.name,
+              item: `${SITE.url}${ROUTES.home}`,
+            },
+            { "@type": "ListItem", position: 2, name: "활용", item: `${SITE.url}${ROUTES.use}` },
+            { "@type": "ListItem", position: 3, name: useCase.title, item: url },
+          ],
+        }}
+      />
       <div className="wrap">
         <header>
           <p className="crumb">
-            <Link href="/use/">활용</Link> › {KIND_LABEL[useCase.kind]}
+            <Link href={ROUTES.use}>활용</Link> › {labelOf(useCase)}
           </p>
           <h1>{useCase.title}</h1>
           <p className="lede">{useCase.summary}</p>
@@ -54,32 +83,7 @@ export default async function UseCasePage({ params }: Props) {
           {useCase.situation.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
-        </div>
 
-        {/* 꾸미는 그림이다. 같은 내용이 본문에 글로 있다 */}
-        <div className="example" aria-hidden="true">
-          <p className="tiny">{useCase.example.caption}</p>
-          <div>
-            {useCase.example.rows.map((row) => (
-              <div className="row" key={row.name}>
-                <span>
-                  {row.name}
-                  {row.note ? <span className="sub">{row.note}</span> : null}
-                </span>
-                <span className="amount">
-                  {row.value}
-                  {row.valueNote ? (
-                    <span className={row.valueNote.includes("+") ? "sub delta" : "sub"}>
-                      {row.valueNote}
-                    </span>
-                  ) : null}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="body">
           {useCase.sections.map((section) => (
             <section key={section.heading}>
               <h2>{section.heading}</h2>
@@ -93,6 +97,13 @@ export default async function UseCasePage({ params }: Props) {
                   ))}
                 </ul>
               ) : null}
+              {section.figures ? (
+                <div className="shots">
+                  {section.figures.map((figure) => (
+                    <Shot key={figure.file} figure={figure} />
+                  ))}
+                </div>
+              ) : null}
             </section>
           ))}
         </div>
@@ -102,7 +113,7 @@ export default async function UseCasePage({ params }: Props) {
           <ul className="list">
             {others.map((other) => (
               <li key={other.slug}>
-                <Link href={`/use/${other.slug}/`}>{other.title}</Link>
+                <Link href={ROUTES.article(other.slug)}>{other.title}</Link>
               </li>
             ))}
           </ul>

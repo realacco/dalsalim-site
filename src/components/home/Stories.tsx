@@ -1,4 +1,6 @@
-import { won } from "./format";
+import "./stories.css";
+
+import { won } from "@/lib/format";
 
 /** 가계부마다 그 가계부를 쓰는 사람의 한마디 · 짧은 설명 · 작은 화면 그림 한 묶음. 값은 지어낸 것이다 */
 export function Stories() {
@@ -100,14 +102,14 @@ export function Stories() {
           </div>
           <div className="story-ui" aria-hidden="true">
             <div className="row">
-              <span>라멘</span>
+              <span>식비</span>
               <span className="amount">
                 ¥1,800
                 <span className="sub">약 {won(16_900)}</span>
               </span>
             </div>
             <div className="row">
-              <span>전철</span>
+              <span>교통</span>
               <span className="amount">
                 ¥460
                 <span className="sub">약 {won(4_300)}</span>

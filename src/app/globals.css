@@ -224,9 +224,14 @@ a.btn:hover {
   transform: translateY(-1px);
 }
 
-/* 아직 받을 수 없는 상태 표시. 링크가 아니다 */
+/*
+  아직 받을 수 없는 상태 표시. 링크가 아니다.
+  흐리게(투명하게) 하지 않는다 — 「안드로이드 베타 테스트 중」은 읽어야 하는 글자인데, 흐리면 대비가 1.8:1 까지 떨어진다.
+  채운 버튼과는 면의 진하기로 가른다.
+*/
 .btn-pending {
-  opacity: 0.4;
+  background: var(--primary-soft);
+  color: var(--primary);
 }
 
 .btn-ghost {
@@ -236,6 +241,25 @@ a.btn:hover {
 
 a.btn-ghost:hover {
   background: var(--surface-pressed);
+}
+
+/*
+  가계부 종류의 색을 고른다 — `data-kind` 가 붙은 조각 안에서 `--kind` · `--kind-soft` 가 그 종류의 색이 된다.
+  종류를 가를 뿐 상태를 말하지 않는다.
+*/
+[data-kind="personal"] {
+  --kind: var(--kind-personal);
+  --kind-soft: var(--kind-personal-soft);
+}
+
+[data-kind="family"] {
+  --kind: var(--kind-family);
+  --kind-soft: var(--kind-family-soft);
+}
+
+[data-kind="trip"] {
+  --kind: var(--kind-trip);
+  --kind-soft: var(--kind-trip-soft);
 }
 
 .actions {

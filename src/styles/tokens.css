@@ -16,7 +16,11 @@
 
   --ink: #16181d;
   --ink-soft: #58606e;
-  --ink-faint: #6d7786;
+  /*
+    앱의 값(#6d7786)보다 한 단 짙다. 앱은 작은 글자를 흰 면 위에 두지만 사이트는 바탕 위에 바로 두는 곳이 많아서,
+    앱의 값으로는 대비가 4.5:1 에 못 미친다 (바탕 위 4.22 → 4.95)
+  */
+  --ink-faint: #626c7b;
 
   --line: #e8edf3;
   --line-strong: #d4dbe4;
@@ -31,7 +35,8 @@
   /* 가계부 종류 — 내(파랑) · 가족(살구) · 여행(하늘). 종류를 가를 뿐 상태를 말하지 않는다 */
   --kind-personal: #1966f0;
   --kind-personal-soft: #eef4ff;
-  --kind-family: #a85a17;
+  /* 앱의 값(#a85a17)보다 한 단 짙다 — 연한 살구 면 위의 작은 글자가 4.5:1 을 넘게 (4.35 → 4.76) */
+  --kind-family: #9f5515;
   --kind-family-soft: #fbebdc;
   --kind-trip: #1d6f9c;
   --kind-trip-soft: #dceef8;
@@ -70,14 +75,15 @@
     "Noto Sans KR", "Malgun Gothic", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --text-caption: 12px;
-  --text-small: 13px;
-  --text-body: 15px;
-  --text-body-lg: 17px;
-  --text-title: 20px;
-  --text-headline: 24px;
-  --text-display: 30px;
-  --text-display-lg: 38px;
+  /* 글자 크기는 rem 이다 — 브라우저의 기본 글자 크기를 키워 둔 사람에게 같이 커진다. 옆의 px 은 기본(16px)일 때의 크기 */
+  --text-caption: 0.75rem; /* 12px */
+  --text-small: 0.8125rem; /* 13px */
+  --text-body: 0.9375rem; /* 15px */
+  --text-body-lg: 1.0625rem; /* 17px */
+  --text-title: 1.25rem; /* 20px */
+  --text-headline: 1.5rem; /* 24px */
+  --text-display: 1.875rem; /* 30px */
+  --text-display-lg: 2.375rem; /* 38px */
 
   /*
     웹에만 있는 값 — 앱에는 폭이 없다.
@@ -90,9 +96,9 @@
   --header-height: 64px;
 
   /* 홈 전용 — 큰 제목과 떠 있는 카드. 다른 페이지에서 빌려 쓰지 않는다 */
-  --home-title-md: 48px;
-  --home-title-lg: 60px;
-  --home-tile-title: 22px;
+  --home-title-md: 3rem; /* 48px */
+  --home-title-lg: 3.75rem; /* 60px */
+  --home-tile-title: 1.375rem; /* 22px */
   --home-lift: 0 18px 40px -18px color-mix(in srgb, var(--ink) 32%, transparent);
 
   color-scheme: light;

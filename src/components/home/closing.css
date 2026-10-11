@@ -1,0 +1,25 @@
+/* 끝 인사 — 로고와 상태 버튼. */
+.home .closing .wrap {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-lg);
+  padding-block: 40px 64px;
+  text-align: center;
+}
+
+.home .closing svg {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+}
+
+.home .closing h2 {
+  font-size: var(--text-display);
+  letter-spacing: -0.8px;
+  font-weight: 700;
+}
+
+.home .closing .actions {
+  justify-content: center;
+}

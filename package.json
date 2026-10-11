@@ -7,7 +7,12 @@
     "build": "next build",
     "lint": "eslint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "check": "node scripts/check.mjs",
+    "render:og": "node scripts/render.mjs og",
+    "render:alerts": "node scripts/render.mjs alerts",
+    "shots:crop": "node scripts/crop-shots.mjs",
+    "shots:webp": "node scripts/to-webp.mjs"
   },
   "dependencies": {
     "next": "16.4.0",
@@ -19,9 +24,12 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "axe-core": "^4.14.0",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
+    "playwright": "^1.64.0",
     "prettier": "^3.9.10",
+    "sharp": "^0.35.5",
     "typescript": "^5"
   },
   "description": "달살림 소개 사이트 — dalsalim.dabutdev.com"

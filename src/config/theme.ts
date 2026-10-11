@@ -6,3 +6,13 @@ export const THEME_STORAGE_KEY = "dalsalim.theme";
   <head> 안에 글자로 들어가므로 바깥 값을 쓰지 않는다.
 */
 export const THEME_INIT_SCRIPT = `try{var t=localStorage.getItem(${JSON.stringify(THEME_STORAGE_KEY)});if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
+
+/*
+  브라우저와 홈 화면이 CSS 밖에서 읽는 색 (주소창 색 · 홈 화면 추가). CSS 변수를 읽을 수 없는 자리라 값을 적는다.
+  `src/styles/tokens.css` 의 `--bg` · `--primary` 와 같은 값이어야 한다.
+*/
+export const META_COLORS = {
+  bgLight: "#f5f7fa",
+  bgDark: "#0e1217",
+  brand: "#1966f0",
+} as const;
