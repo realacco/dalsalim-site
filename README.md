@@ -64,17 +64,22 @@ PR 과 `main` 에서 포맷 · 린트 · 빌드 · 동작 확인이 돈다 (`.gi
 
 페이지는 사이트맵에서 따라가므로 페이지나 글을 더해도 이 파일을 고치지 않는다.
 
-## 배포 (Cloudflare Pages)
+## 배포 (Cloudflare)
 
-| 칸          | 값                    |
-| ----------- | --------------------- |
-| 빌드 명령   | `npm run build`       |
-| 내보낼 폴더 | `out`                 |
-| 환경 변수   | `NODE_VERSION` = `22` |
+Cloudflare 대시보드의 **Workers & Pages → Create application → Import a repository** 로 이 저장소를 연결한다.
+무엇을 올릴지는 `wrangler.jsonc` 가 정한다 — 서버 코드 없이 `out/` 만 올린다. 대시보드에 적는 것은 둘이다.
+
+| 칸        | 값                    |
+| --------- | --------------------- |
+| 빌드 명령 | `npm run build`       |
+| 배포 명령 | `npx wrangler deploy` |
+
+Node 버전은 `.node-version` 이 정한다. `main` 에 머지하면 다시 빌드해 배포한다.
+도메인은 만든 뒤 **Settings → Domains & Routes** 에서 `dalsalim.dabutdev.com` 을 붙인다.
 
 - 주소는 `dalsalim.dabutdev.com` 이다. 바꾸면 `src/config/site.ts` 의 `url` 도 같이 고친다 —
   대표 주소 · 사이트맵 · 공유 미리보기가 그 값으로 만들어진다.
-- 응답 헤더는 `public/_headers` 가 정한다 (Cloudflare Pages 가 읽는 파일).
+- 응답 헤더는 `public/_headers` 가 정한다 (Cloudflare 가 읽는 파일).
 - 🔴 **Cloudflare 의 방문 통계(Web Analytics)를 켜지 않는다.** 켜면 방문자 정보를 받게 되어 아래 「지킬 것」이 깨진다.
 
 ## 고칠 때
