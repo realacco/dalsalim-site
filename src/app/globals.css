@@ -238,6 +238,25 @@ a.btn-ghost:hover {
   background: var(--surface-pressed);
 }
 
+/*
+  가계부 종류의 색을 고른다 — `data-kind` 가 붙은 조각 안에서 `--kind` · `--kind-soft` 가 그 종류의 색이 된다.
+  종류를 가를 뿐 상태를 말하지 않는다.
+*/
+[data-kind="personal"] {
+  --kind: var(--kind-personal);
+  --kind-soft: var(--kind-personal-soft);
+}
+
+[data-kind="family"] {
+  --kind: var(--kind-family);
+  --kind-soft: var(--kind-family-soft);
+}
+
+[data-kind="trip"] {
+  --kind: var(--kind-trip);
+  --kind-soft: var(--kind-trip-soft);
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;

@@ -13,21 +13,6 @@
   gap: var(--space-xxl);
 }
 
-.use [data-kind="personal"] {
-  --kind: var(--kind-personal);
-  --kind-soft: var(--kind-personal-soft);
-}
-
-.use [data-kind="family"] {
-  --kind: var(--kind-family);
-  --kind-soft: var(--kind-family-soft);
-}
-
-.use [data-kind="trip"] {
-  --kind: var(--kind-trip);
-  --kind-soft: var(--kind-trip-soft);
-}
-
 .use .kind {
   justify-self: start;
   padding: var(--space-xs) var(--space-md);

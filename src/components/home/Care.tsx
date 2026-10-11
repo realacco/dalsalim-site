@@ -1,6 +1,6 @@
-import { LEGAL_LINKS } from "@/config/site";
+import "./care.css";
 
-const DELETE_LINK = LEGAL_LINKS.find((link) => link.label === "계정 지우기");
+import { LEGAL } from "@/config/site";
 
 /** 적은 것이 어디에 저장되고, 무엇은 저장하지 않으며, 어떻게 받아 가고 지우는지 */
 export function Care() {
@@ -21,8 +21,7 @@ export function Care() {
             <li>
               <strong>언제든 받아 가고 지울 수 있어요</strong>내 기록은 엑셀 파일로 받을 수 있어요.
               탈퇴하면 무엇이 지워지고 남는지는{" "}
-              {DELETE_LINK ? <a href={DELETE_LINK.href}>계정 지우기</a> : "계정 지우기"} 안내에
-              있어요.
+              <a href={LEGAL.accountDeletion.href}>{LEGAL.accountDeletion.label}</a> 안내에 있어요.
             </li>
           </ul>
         </div>

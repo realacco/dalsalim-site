@@ -1,4 +1,6 @@
-import { won } from "./format";
+import "./stories.css";
+
+import { won } from "@/lib/format";
 
 /** 가계부마다 그 가계부를 쓰는 사람의 한마디 · 짧은 설명 · 작은 화면 그림 한 묶음. 값은 지어낸 것이다 */
 export function Stories() {

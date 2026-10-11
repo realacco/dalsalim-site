@@ -1,4 +1,6 @@
-import { won } from "./format";
+import "./insights.css";
+
+import { won } from "@/lib/format";
 
 /* 지어낸 값이다. 도넛 조각의 합이 가운데 숫자가 되고, 점선은 그려진 막대의 실제 평균 자리에 선다 */
 const SLICES = [

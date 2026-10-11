@@ -7,8 +7,9 @@ import "./globals.css";
 
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { ROUTES } from "@/config/routes";
 import { SITE } from "@/config/site";
-import { THEME_INIT_SCRIPT } from "@/config/theme";
+import { META_COLORS, THEME_INIT_SCRIPT } from "@/config/theme";
 
 export const metadata: Metadata = {
   // 아래의 상대 주소(대표 주소 · 공유 그림)가 이 주소를 기준으로 풀린다
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   description: SITE.description,
   applicationName: SITE.name,
   keywords: ["달살림", "가계부", "가족 가계부", "개인 가계부", "여행 가계부", "가계부 앱"],
-  alternates: { canonical: "/" },
+  alternates: { canonical: ROUTES.home },
   // 공유 그림은 app/opengraph-image.png 가 자동으로 붙는다
   openGraph: {
     type: "website",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     title: SITE.title,
     description: SITE.description,
-    url: "/",
+    url: ROUTES.home,
   },
   twitter: { card: "summary_large_image", title: SITE.title, description: SITE.description },
   // 전화번호처럼 보이는 금액을 폰 브라우저가 전화 링크로 바꾸지 않게
@@ -34,8 +35,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f5f7fa" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e1217" },
+    { media: "(prefers-color-scheme: light)", color: META_COLORS.bgLight },
+    { media: "(prefers-color-scheme: dark)", color: META_COLORS.bgDark },
   ],
 };
 

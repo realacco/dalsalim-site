@@ -4,12 +4,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { type Figure, findUseCase, labelOf, USE_CASES } from "@/content/use";
+import { JsonLd } from "@/components/JsonLd";
+import { Shot } from "@/components/Shot";
+import { ROUTES } from "@/config/routes";
+import { SITE } from "@/config/site";
+import { findUseCase, labelOf, USE_CASES } from "@/content/use";
 
 type Props = { params: Promise<{ slug: string }> };
-
-/** 내보낸 화면 사진의 폭. 화면에서는 이보다 작게 보여서 고해상도 화면에서도 또렷하다 */
-const FIGURE_WIDTH = 720;
 
 /** 글의 수만큼 페이지를 빌드 때 만든다. 목록에 없는 주소는 「찾지 못했어요」다 */
 export function generateStaticParams() {
@@ -25,35 +26,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: useCase.title,
     description: useCase.summary,
-    alternates: { canonical: `/use/${useCase.slug}/` },
+    alternates: { canonical: ROUTES.article(useCase.slug) },
     openGraph: {
       type: "article",
       title: useCase.title,
       description: useCase.summary,
-      url: `/use/${useCase.slug}/`,
+      url: ROUTES.article(useCase.slug),
     },
   };
-}
-
-function Shot({ figure }: { figure: Figure }) {
-  return (
-    <figure className="shot">
-      {/* 정적으로 내보내서 이미지 최적화 서버가 없다. 크기를 맞춰 둔 파일을 그대로 싣는다 */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={`/use/${figure.file}.png`}
-        alt={figure.alt}
-        width={FIGURE_WIDTH}
-        height={figure.height}
-        loading="lazy"
-        decoding="async"
-      />
-      <figcaption>
-        {figure.caption}
-        {figure.drawn ? <span> 앱 화면을 본떠 그린 그림이에요.</span> : null}
-      </figcaption>
-    </figure>
-  );
 }
 
 export default async function UseCasePage({ params }: Props) {
@@ -65,10 +45,20 @@ export default async function UseCasePage({ params }: Props) {
 
   return (
     <article className="use" data-kind={useCase.kind}>
+      <JsonLd
+        data={{
+          "@type": "Article",
+          headline: useCase.title,
+          description: useCase.summary,
+          inLanguage: "ko",
+          mainEntityOfPage: `${SITE.url}${ROUTES.article(useCase.slug)}`,
+          publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
+        }}
+      />
       <div className="wrap">
         <header>
           <p className="crumb">
-            <Link href="/use/">활용</Link> › {labelOf(useCase)}
+            <Link href={ROUTES.use}>활용</Link> › {labelOf(useCase)}
           </p>
           <h1>{useCase.title}</h1>
           <p className="lede">{useCase.summary}</p>
@@ -108,7 +98,7 @@ export default async function UseCasePage({ params }: Props) {
           <ul className="list">
             {others.map((other) => (
               <li key={other.slug}>
-                <Link href={`/use/${other.slug}/`}>{other.title}</Link>
+                <Link href={ROUTES.article(other.slug)}>{other.title}</Link>
               </li>
             ))}
           </ul>

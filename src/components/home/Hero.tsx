@@ -1,8 +1,11 @@
+import "./hero.css";
+
 import Link from "next/link";
 
+import { ROUTES } from "@/config/routes";
 import { PlatformStatus } from "@/components/PlatformStatus";
 
-import { won } from "./format";
+import { won } from "@/lib/format";
 
 /* 화면 그림의 값은 전부 지어낸 것이다 */
 const FIXED = { before: 200_000, after: 212_000 };
@@ -27,7 +30,7 @@ export function Hero() {
           </h1>
           <p className="hero-lede">내 가계부, 가족 가계부, 여행 가계부를 한 앱에서 적어요.</p>
           <PlatformStatus />
-          <Link href="/use/" className="btn btn-ghost">
+          <Link href={ROUTES.use} className="btn btn-ghost">
             어떻게 쓰는지 보기 ›
           </Link>
         </div>

@@ -1,3 +1,5 @@
+import "./closing.css";
+
 import { Logo } from "@/components/Logo";
 import { PlatformStatus } from "@/components/PlatformStatus";
 
