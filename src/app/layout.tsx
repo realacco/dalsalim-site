@@ -11,9 +11,25 @@ import { SITE } from "@/config/site";
 import { THEME_INIT_SCRIPT } from "@/config/theme";
 
 export const metadata: Metadata = {
+  // 아래의 상대 주소(대표 주소 · 공유 그림)가 이 주소를 기준으로 풀린다
   metadataBase: new URL(SITE.url),
   title: { default: SITE.title, template: `%s — ${SITE.name}` },
   description: SITE.description,
+  applicationName: SITE.name,
+  keywords: ["달살림", "가계부", "가족 가계부", "개인 가계부", "여행 가계부", "가계부 앱"],
+  alternates: { canonical: "/" },
+  // 공유 그림은 app/opengraph-image.png 가 자동으로 붙는다
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    siteName: SITE.name,
+    title: SITE.title,
+    description: SITE.description,
+    url: "/",
+  },
+  twitter: { card: "summary_large_image", title: SITE.title, description: SITE.description },
+  // 전화번호처럼 보이는 금액을 폰 브라우저가 전화 링크로 바꾸지 않게
+  formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {
@@ -35,8 +51,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </noscript>
       </head>
       <body>
+        <a href="#main" className="skip-link">
+          본문으로 건너뛰기
+        </a>
         <Header />
-        <main>{children}</main>
+        <main id="main">{children}</main>
         <Footer />
       </body>
     </html>

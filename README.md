@@ -35,6 +35,21 @@ src/
 | 내보낼 폴더 | `out`                 |
 | 환경 변수   | `NODE_VERSION` = `22` |
 
+- 주소는 `dalsalim.dabutdev.com` 이다. 바꾸면 `src/config/site.ts` 의 `url` 도 같이 고친다 —
+  대표 주소 · 사이트맵 · 공유 미리보기가 그 값으로 만들어진다.
+- 응답 헤더는 `public/_headers` 가 정한다 (Cloudflare Pages 가 읽는 파일).
+- 🔴 **Cloudflare 의 방문 통계(Web Analytics)를 켜지 않는다.** 켜면 방문자 정보를 받게 되어 아래 「지킬 것」이 깨진다.
+
+## 고칠 때
+
+| 무엇을                | 어디를                                                                                           |
+| --------------------- | ------------------------------------------------------------------------------------------------ |
+| 받기 버튼을 연다      | `src/config/site.ts` 의 `PLATFORMS` 에 스토어 주소를 채운다. 눌리지 않던 상태 표시가 버튼이 된다 |
+| 활용 글을 더한다      | `src/content/use.ts` 의 배열에 하나를 더한다. 주소 · 목록 · 사이트맵이 따라 생긴다               |
+| 문의 주소 · 약관 링크 | `src/config/site.ts`                                                                             |
+| 색 · 간격             | `src/styles/tokens.css`                                                                          |
+| 공유 미리보기 그림    | `scripts/og-image.html` 을 고치고 1200×630 으로 찍어 `src/app/opengraph-image.png` 를 바꾼다     |
+
 ## 지킬 것
 
 - **색 · 간격 · 모서리는 `src/styles/tokens.css` 의 변수로만 쓴다.** 값은 달살림 앱의 것을 옮겨 적었다.
