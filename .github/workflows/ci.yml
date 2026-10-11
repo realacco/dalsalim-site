@@ -1,0 +1,32 @@
+name: CI
+
+# PR 과 main 에 올라온 것을 본다 — 포맷 · 린트 · 빌드, 그리고 빌드 결과를 띄운 동작 확인.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run build
+      # 동작 확인이 쓰는 브라우저. 빌드에는 필요 없어서 여기서만 받는다
+      - run: npx playwright install --with-deps chromium
+      - run: npm run check
