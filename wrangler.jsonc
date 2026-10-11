@@ -1,0 +1,18 @@
+/*
+  Cloudflare 에 올리는 설정 — 서버 코드 없이 빌드 결과(out/)만 올린다.
+
+  Cloudflare 대시보드의 「저장소 가져오기」가 이 파일을 읽는다. 대시보드에 적는 것은 둘뿐이다:
+    빌드 명령  npm run build
+    배포 명령  npx wrangler deploy
+*/
+{
+  "name": "dalsalim-site",
+  "compatibility_date": "2026-10-11",
+  "assets": {
+    "directory": "./out",
+    // 없는 주소에는 out/404.html 을 404 로 준다. 기본값이면 빈 404 가 나간다
+    "not_found_handling": "404-page",
+    // `/use/` 처럼 `/` 로 끝나는 주소가 대표 주소다 (next.config.ts 의 trailingSlash 와 같은 쪽)
+    "html_handling": "auto-trailing-slash",
+  },
+}
