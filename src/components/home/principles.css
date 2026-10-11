@@ -104,8 +104,9 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* 종류 색 면 위라 가장 흐린 글자색은 대비가 모자란다 */
 .home .box .why {
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .home .options {

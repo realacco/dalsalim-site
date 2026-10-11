@@ -10,25 +10,15 @@ import { Header } from "@/components/Header";
 import { ROUTES } from "@/config/routes";
 import { SITE } from "@/config/site";
 import { META_COLORS, THEME_INIT_SCRIPT } from "@/config/theme";
+import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   // 아래의 상대 주소(대표 주소 · 공유 그림)가 이 주소를 기준으로 풀린다
   metadataBase: new URL(SITE.url),
   title: { default: SITE.title, template: `%s — ${SITE.name}` },
-  description: SITE.description,
   applicationName: SITE.name,
   keywords: ["달살림", "가계부", "가족 가계부", "개인 가계부", "여행 가계부", "가계부 앱"],
-  alternates: { canonical: ROUTES.home },
-  // 공유 그림은 app/opengraph-image.png 가 자동으로 붙는다
-  openGraph: {
-    type: "website",
-    locale: "ko_KR",
-    siteName: SITE.name,
-    title: SITE.title,
-    description: SITE.description,
-    url: ROUTES.home,
-  },
-  twitter: { card: "summary_large_image", title: SITE.title, description: SITE.description },
+  ...pageMetadata({ description: SITE.description, path: ROUTES.home }),
   // 전화번호처럼 보이는 금액을 폰 브라우저가 전화 링크로 바꾸지 않게
   formatDetection: { telephone: false },
 };

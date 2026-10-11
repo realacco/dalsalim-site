@@ -6,9 +6,10 @@ import { notFound } from "next/navigation";
 
 import { JsonLd } from "@/components/JsonLd";
 import { Shot } from "@/components/Shot";
-import { ROUTES } from "@/config/routes";
+import { ROUTES, USE_FIGURE_DIR } from "@/config/routes";
 import { SITE } from "@/config/site";
 import { findUseCase, labelOf, USE_CASES } from "@/content/use";
+import { pageMetadata } from "@/lib/metadata";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -23,17 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const useCase = findUseCase(slug);
   if (!useCase) return {};
-  return {
+  return pageMetadata({
     title: useCase.title,
     description: useCase.summary,
-    alternates: { canonical: ROUTES.article(useCase.slug) },
-    openGraph: {
-      type: "article",
-      title: useCase.title,
-      description: useCase.summary,
-      url: ROUTES.article(useCase.slug),
-    },
-  };
+    path: ROUTES.article(useCase.slug),
+    type: "article",
+  });
 }
 
 export default async function UseCasePage({ params }: Props) {
@@ -42,6 +38,8 @@ export default async function UseCasePage({ params }: Props) {
   if (!useCase) notFound();
 
   const others = USE_CASES.filter((other) => other.slug !== useCase.slug);
+  const url = `${SITE.url}${ROUTES.article(useCase.slug)}`;
+  const firstFigure = useCase.sections.flatMap((section) => section.figures ?? [])[0];
 
   return (
     <article className="use" data-kind={useCase.kind}>
@@ -51,8 +49,25 @@ export default async function UseCasePage({ params }: Props) {
           headline: useCase.title,
           description: useCase.summary,
           inLanguage: "ko",
-          mainEntityOfPage: `${SITE.url}${ROUTES.article(useCase.slug)}`,
+          mainEntityOfPage: url,
+          ...(firstFigure ? { image: `${SITE.url}${USE_FIGURE_DIR}/${firstFigure.file}.png` } : {}),
           publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
+        }}
+      />
+      {/* 검색 결과에 「달살림 › 활용 › 글」 경로가 보이게 */}
+      <JsonLd
+        data={{
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: SITE.name,
+              item: `${SITE.url}${ROUTES.home}`,
+            },
+            { "@type": "ListItem", position: 2, name: "활용", item: `${SITE.url}${ROUTES.use}` },
+            { "@type": "ListItem", position: 3, name: useCase.title, item: url },
+          ],
         }}
       />
       <div className="wrap">
