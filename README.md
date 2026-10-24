@@ -92,6 +92,8 @@ Node 버전은 `.node-version` 이 정한다. `main` 에 머지하면 다시 빌
 | 문의 주소 · 약관 링크 | `src/config/site.ts` 의 `SITE` · `LEGAL`                                                                                                                                                                |
 | 색 · 간격             | `src/styles/tokens.css`. 주소창 색처럼 CSS 밖에서 읽는 색은 `src/config/theme.ts` 의 `META_COLORS` 도 같이 고친다                                                                                       |
 | 홈의 화면 사진        | 앱을 **예시 데이터로** 띄워 밝게 · 글자 크기 기본으로 찍는다. `scripts/shots.mjs` 의 `NAMES` 에 이름을 넣고 `npm run shots -- <캡처 폴더>`. 실제 금액 · 이름 · 카드사 앱 이름이 찍힌 사진은 넣지 않는다 |
+| 검색 엔진 소유 확인   | 구글 서치 콘솔 · 네이버 서치어드바이저가 주는 「HTML 태그」의 content 값을 `src/config/site.ts` 의 `SEARCH_VERIFICATION` 에 넣는다                                                                      |
+| 자주 묻는 것          | `src/components/home/Faq.tsx` 의 `FAQ` 하나를 고친다 — 화면과 구조화 데이터(FAQPage)가 같이 바뀐다. 앱이 실제로 하는 것만 쓴다                                                                          |
 | 공유 미리보기 그림    | `scripts/og-image.html` 을 고치고 `npm run render:og`                                                                                                                                                   |
 
 ## 지킬 것

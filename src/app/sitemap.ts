@@ -10,6 +10,8 @@ export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [ROUTES.home].map((path) => ({
     url: `${SITE.url}${path}`,
+    // 정적으로 내보내서 빌드한 때가 곧 마지막으로 바뀐 때다
+    lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 1,
   }));

@@ -8,7 +8,7 @@ import "./globals.css";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ROUTES } from "@/config/routes";
-import { SITE } from "@/config/site";
+import { SEARCH_VERIFICATION, SITE } from "@/config/site";
 import { META_COLORS, THEME_INIT_SCRIPT } from "@/config/theme";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -19,13 +19,35 @@ export const metadata: Metadata = {
   applicationName: SITE.name,
   keywords: [
     "또링 가계부",
-    "가계부",
-    "가족 가계부",
+    "가계부 앱",
     "부부 가계부",
+    "가족 가계부",
+    "공유 가계부",
+    "커플 가계부",
     "개인 가계부",
     "여행 가계부",
-    "가계부 앱",
+    "여행 경비 정산",
+    "더치페이 정산",
+    "고정비 관리",
+    "예산 관리",
+    "광고 없는 가계부",
   ],
+  authors: [{ name: SITE.publisher }],
+  creator: SITE.publisher,
+  publisher: SITE.publisher,
+  category: "finance",
+  // 검색 결과의 미리보기를 줄이지 않는다 — 큰 그림 · 긴 설명이 그대로 뜬다
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { "max-image-preview": "large", "max-snippet": -1 },
+  },
+  verification: {
+    ...(SEARCH_VERIFICATION.google ? { google: SEARCH_VERIFICATION.google } : {}),
+    ...(SEARCH_VERIFICATION.naver
+      ? { other: { "naver-site-verification": SEARCH_VERIFICATION.naver } }
+      : {}),
+  },
   ...pageMetadata({ description: SITE.description, path: ROUTES.home }),
   // 전화번호처럼 보이는 금액을 폰 브라우저가 전화 링크로 바꾸지 않게
   formatDetection: { telephone: false },

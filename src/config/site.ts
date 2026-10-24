@@ -2,9 +2,13 @@
 export const SITE = {
   name: "또링 가계부",
   url: "https://ddoring.dabutdev.com",
-  title: "또링 가계부 — 나 · 가족 · 여행, 가계부 세 권을 한 앱에서",
+  /* 검색 결과의 제목 — 사람들이 찾는 말(부부 · 가족 공유 가계부, 여행 경비 정산)을 앞에 둔다 */
+  title: "또링 가계부 — 부부 · 가족 공유 가계부와 내 가계부, 여행 경비 정산까지",
   description:
-    "내 가계부, 가족 가계부, 여행 가계부를 한 앱에서 적어요. 광고 없이, 소비를 평가하지 않고 내역과 통계만 보여 주는 가계부, 또링 가계부.",
+    "부부 · 가족이 함께 쓰는 공유 가계부, 혼자 쓰는 내 가계부, 외화 지출과 정산을 적는 여행 가계부를 한 앱에서. 예산 · 고정비 · 자산 · 카드 결제 알림까지, 광고 없이 보여 주기만 하는 가계부 앱이에요.",
+  /* 같은 앱을 부르는 다른 이름 — 띄어쓰기 없이 찾는 사람과 옛 이름(달살림)으로 찾는 사람 */
+  alternateNames: ["또링가계부", "또링", "달살림"],
+  publisher: "dabutdev",
   supportEmail: "support@dabutdev.com",
   copyrightHolder: "dabutdev",
 } as const;
@@ -26,6 +30,15 @@ export const LEGAL = {
 } as const;
 
 export const HELP = { label: "도움말", href: `${SERVER_BASE}/help` } as const;
+
+/*
+  검색 엔진의 소유 확인 값 — 구글 서치 콘솔 · 네이버 서치어드바이저가 「HTML 태그」로 주는 content 값을 넣는다.
+  비어 있으면 태그를 싣지 않는다. 비밀이 아니다(누구나 페이지 소스에서 본다).
+*/
+export const SEARCH_VERIFICATION: { google: string | null; naver: string | null } = {
+  google: null,
+  naver: null,
+};
 
 /** 꼬리말에 서는 순서 */
 export const FOOTER_LINKS = [
