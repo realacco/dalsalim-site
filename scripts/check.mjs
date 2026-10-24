@@ -48,6 +48,21 @@ try {
   );
   ok("홈 HTML 에 도움말 링크", home.includes("https://api.dabutdev.com/help"));
 
+  // 자주 묻는 것 — 구조화 데이터의 물음이 화면에도 똑같이 있어야 한다(다르면 검색 엔진이 속임으로 본다)
+  const graph = [...home.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)]
+    .map((match) => JSON.parse(match[1]))
+    .flatMap((data) => data["@graph"] ?? [data]);
+  const types = graph.map((node) => node["@type"]);
+  ok(
+    "구조화 데이터에 만든 곳 · 사이트 · 앱 · 자주 묻는 것",
+    ["Organization", "WebSite", "MobileApplication", "FAQPage"].every((t) => types.includes(t)),
+    types.join(" "),
+  );
+  const questions = graph.find((node) => node["@type"] === "FAQPage")?.mainEntity ?? [];
+  const unseen = questions.filter((q) => !home.includes(`>${q.name}<`)).map((q) => q.name);
+  ok("자주 묻는 것이 화면과 같음", questions.length > 0 && unseen.length === 0, unseen.join(" / "));
+  ok("llms.txt 가 있음", existsSync(join(OUT, "llms.txt")));
+
   const sitemap = readFileSync(join(OUT, "sitemap.xml"), "utf8");
   const listed = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) =>
     match[1].replace(SITE_URL, ""),

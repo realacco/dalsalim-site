@@ -27,8 +27,8 @@ export function Hero() {
             <em className="grad-text">가계부 세 권</em>을<br className="only-wide" /> 한 앱에서
           </h1>
           <p className="hero-lede">
-            혼자 쓰는 내 가계부, 같이 결산하는 가족 가계부, 외화로 적는 여행 가계부. 광고 없이,
-            소비를 평가하지 않고 보여 주기만 해요.
+            혼자 쓰는 내 가계부, 부부 · 가족이 같이 결산하는 공유 가계부, 외화로 적고 정산하는 여행
+            가계부. 광고 없이, 소비를 평가하지 않고 보여 주기만 해요.
           </p>
           <PlatformStatus />
           <a href={HELP.href} className="btn btn-ghost">

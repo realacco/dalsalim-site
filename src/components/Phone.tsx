@@ -26,6 +26,8 @@ export function Phone({
         width={SHOT.width}
         height={SHOT.height}
         loading={eager ? "eager" : "lazy"}
+        // 첫 화면의 큰 그림은 가장 먼저 받는다 — 화면이 다 그려지는 시점(LCP)이 이 그림이다
+        fetchPriority={eager ? "high" : "auto"}
         decoding="async"
       />
     </div>
