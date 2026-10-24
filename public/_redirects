@@ -2,6 +2,7 @@
 /use /  301
 /use/* /  301
 
-# 구글 서치 콘솔 확인 파일은 받은 이름 그대로(.html 포함) 200 으로 열려야 한다.
+# 구글 서치 콘솔 · 네이버 서치어드바이저 확인 파일은 받은 이름 그대로(.html 포함) 200 으로 열려야 한다.
 # html_handling 이 .html 을 떼는 주소로 넘기므로, 원래 이름을 그 파일로 바로 이어 준다
 /googlec1eac6162c70844d.html /googlec1eac6162c70844d 200
+/naverb4f77a185141b6cbbe2461cdad25605b.html /naverb4f77a185141b6cbbe2461cdad25605b 200
