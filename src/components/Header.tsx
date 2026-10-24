@@ -4,7 +4,6 @@ import { NAV, ROUTES } from "@/config/routes";
 import { SITE } from "@/config/site";
 
 import { Logo } from "./Logo";
-import { NavLink } from "./NavLink";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
@@ -17,9 +16,9 @@ export function Header() {
         </Link>
         <nav className="site-nav" aria-label="주요 메뉴">
           {NAV.map((item) => (
-            <NavLink key={item.href} href={item.href}>
+            <a key={item.href} href={item.href} data-external={item.external || undefined}>
               {item.label}
-            </NavLink>
+            </a>
           ))}
         </nav>
         <ThemeToggle />

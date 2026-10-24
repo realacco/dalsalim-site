@@ -1,15 +1,17 @@
 /*
   디자인 토큰.
 
-  색 · 간격 · 모서리 · 글자 크기는 달살림 앱의 값을 옮겨 적은 것이다 — 거의 흰 바탕에 파랑 하나로 강조하고,
-  어둡게는 남색기를 뺀 숯색이다. 앱의 색이 바뀌면 여기도 같이 고친다 (두 저장소를 잇는 자동 검사는 없다).
+  색 · 간격 · 모서리 · 글자 크기는 또링 가계부 앱의 값을 옮겨 적은 것이다 — 흰 바탕에 파랑 하나로 강조하고,
+  구역의 땅은 옅은 회색, 어둡게는 남색기를 뺀 숯색이다 (앱의 파스텔 톤 · 2026-10-23). 앱의 색이 바뀌면 여기도 같이 고친다 (두 저장소를 잇는 자동 검사는 없다).
 
   ★ 색은 반드시 이 파일의 변수로만 쓴다. 컴포넌트에 hex 를 직접 적으면 어둡게에서 깨진다.
 
   테마는 세 상태다 — 기기 설정을 따르거나(속성 없음), 사람이 고른 `data-theme="light" | "dark"`.
 */
 :root {
-  --bg: #f5f7fa;
+  --bg: #ffffff;
+  /* 띠 · 구역이 서는 땅 — 흰 카드가 바탕에서 갈린다 */
+  --bg-group: #f3f4f6;
   --surface: #ffffff;
   --surface-muted: #eaeef3;
   --surface-pressed: #e6ecf4;
@@ -28,6 +30,8 @@
   --primary: #1966f0;
   --primary-soft: #eef4ff;
   --primary-ink: #ffffff;
+  /* 채운 면의 파랑 — 앱의 primaryFace. 큰 글자 · 버튼 면에만 쓴다(흰 글자 3:1 이상) */
+  --primary-face: #4688f3;
 
   /* 지난달보다 늘어난 금액의 글자. 지출 자체에는 쓰지 않는다 */
   --up-ink: #c23a33;
@@ -48,10 +52,47 @@
   --slice-4: #c93c7e;
   --slice-5: #7349ce;
 
-  /* 로고 — 브랜드 색이라 밝게 · 어둡게가 같다 */
-  --brand: #1966f0;
-  --brand-cell: #ffffff;
-  --brand-dot: #f3b67e;
+  /* 로고 — 연한 타일 위의 겹친 카드 두 장. 브랜드 색이라 밝게 · 어둡게가 같다 */
+  --brand: #4688f3;
+  --brand-tile-a: #f5f9ff;
+  --brand-tile-b: #e4eefe;
+  --brand-back-a: #aecbfb;
+  --brand-back-b: #82acf6;
+  --brand-front-a: #9cc2fb;
+  --brand-front-b: #4688f3;
+  --brand-front-c: #356ce8;
+
+  /*
+    번지는 빛 · 그라데이션 글자의 색. 앱의 분류 파스텔(파랑 · 보라 · 하늘 · 주황)에서 왔다.
+    꾸밈에만 쓰고 뜻을 싣지 않는다 — 금액 · 상태의 색이 아니다
+  */
+  --aura-blue: #4688f3;
+  --aura-violet: #a48cef;
+  --aura-sky: #82cff2;
+  --aura-peach: #ee9550;
+  /* 그라데이션 제목 — 흰 바탕 위 큰 글자라 양 끝 모두 3:1 을 넘는다 */
+  --grad-ink: linear-gradient(100deg, #1966f0 0%, #6a5ae0 55%, #1d84b5 100%);
+
+  /* 폰 틀의 테두리 — 기기의 몸체라 밝게 · 어둡게가 같다 */
+  --phone-bezel: #16181d;
+
+  /* 앱 「화면」의 강조색 여섯 — 밝게의 면 단(primaryFace). 기능 소개의 견본에만 쓴다 */
+  --accent-blue: #4688f3;
+  --accent-green: #2e7d45;
+  --accent-purple: #7445c9;
+  --accent-pink: #ffc1dc;
+  --accent-beige: #efe2c8;
+  --accent-mono: #2f3640;
+
+  /*
+    밤하늘 띠 — 약속 구역의 바탕. 밝게 · 어둡게가 같은 짙은 남색이라 그 안의 글자색도 두 테마에서 같다
+  */
+  --night-a: #0b1430;
+  --night-b: #1b1450;
+  --night-ink: #f1f4fa;
+  --night-soft: #b9c2d6;
+  --night-card: rgb(255 255 255 / 0.06);
+  --night-line: rgb(255 255 255 / 0.12);
 
   --space-xxs: 2px;
   --space-xs: 4px;
@@ -107,6 +148,9 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0e1217;
+    --bg-group: #0e1217;
+    --primary-face: #5b93ff;
+    --grad-ink: linear-gradient(100deg, #7aa8ff 0%, #b8a6ff 55%, #8fd6f7 100%);
     --surface: #171c23;
     --surface-muted: #1f262f;
     --surface-pressed: #27303b;
@@ -137,6 +181,9 @@
 /* 위 블록과 같은 값이다 — 사람이 [어둡게]를 고르면 기기 설정이 밝게여도 이쪽이 이긴다 */
 :root[data-theme="dark"] {
   --bg: #0e1217;
+  --bg-group: #0e1217;
+  --primary-face: #5b93ff;
+  --grad-ink: linear-gradient(100deg, #7aa8ff 0%, #b8a6ff 55%, #8fd6f7 100%);
   --surface: #171c23;
   --surface-muted: #1f262f;
   --surface-pressed: #27303b;

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ROUTES } from "@/config/routes";
+import { HELP } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "페이지를 찾지 못했어요",
@@ -18,9 +19,9 @@ export default function NotFound() {
         <Link href={ROUTES.home} className="btn btn-ghost">
           처음 화면으로
         </Link>
-        <Link href={ROUTES.use} className="btn btn-ghost">
-          활용 보기
-        </Link>
+        <a href={HELP.href} className="btn btn-ghost">
+          도움말 보기
+        </a>
       </div>
     </div>
   );

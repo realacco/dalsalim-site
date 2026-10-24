@@ -20,7 +20,7 @@ import { globalHeaders, serveStatic } from "./lib/static-server.mjs";
 const OUT = join(process.cwd(), "out");
 const PORT = 4598;
 const BASE = `http://localhost:${PORT}`;
-const SITE_URL = "https://dalsalim.dabutdev.com";
+const SITE_URL = "https://ddoring.dabutdev.com";
 const AXE = readFileSync(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
 
 if (!existsSync(join(OUT, "index.html"))) {
@@ -40,28 +40,24 @@ try {
 
   // ── 스크립트 없이 받은 HTML — 검색 엔진이 읽는 것 ──────────────
   const home = readFileSync(join(OUT, "index.html"), "utf8");
-  ok("홈 HTML 에 제목 글", home.includes("살림을 한곳에 적는"));
-  ok("홈 HTML 에 원칙 글", home.includes("소비를 평가하지 않아요"));
+  ok("홈 HTML 에 제목 글", home.includes("가계부 세 권"));
+  ok("홈 HTML 에 약속 글", home.includes("소비를 평가하지 않아요"));
+  ok(
+    "홈 HTML 에 가계부 세 권의 글",
+    ["내 가계부", "가족 가계부", "여행 가계부"].every((t) => home.includes(t)),
+  );
+  ok("홈 HTML 에 도움말 링크", home.includes("https://api.dabutdev.com/help"));
 
-  // 활용 글은 사이트맵에서 따라간다 — 글을 더해도 이 파일을 고치지 않는다
   const sitemap = readFileSync(join(OUT, "sitemap.xml"), "utf8");
   const listed = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) =>
     match[1].replace(SITE_URL, ""),
   );
-  const articles = listed.filter((path) => /^\/use\/.+\/$/.test(path));
-  ok("사이트맵에 활용 글이 있음", articles.length > 0, `${articles.length}편`);
-  for (const path of articles) {
-    const file = join(OUT, path, "index.html");
-    const html = existsSync(file) ? readFileSync(file, "utf8") : "";
-    ok(`${path} 에 본문`, html.includes('class="body"'));
-    // 사진(PNG)과 가벼운 짝(WebP) 둘 다 — 다시 찍고 shots:webp 를 안 돌리면 여기서 걸린다
-    const missing = [
-      ...html.matchAll(/<(?:img[^>]+src|source[^>]+srcSet|source[^>]+srcset)="([^"]+)"/g),
-    ]
-      .map((match) => match[1])
-      .filter((src) => !existsSync(join(OUT, src)));
-    ok(`${path} 의 그림 파일이 다 있음`, missing.length === 0, missing.join(" "));
-  }
+  ok("사이트맵에 홈", listed.includes("/"), listed.join(" "));
+  // 홈이 싣는 화면 사진이 다 있다 — shots 를 안 돌리고 이름만 바꾸면 여기서 걸린다
+  const missingShots = [...home.matchAll(/<img[^>]+src="(\/shots\/[^"]+)"/g)]
+    .map((match) => match[1])
+    .filter((src) => !existsSync(join(OUT, src)));
+  ok("홈의 화면 사진 파일이 다 있음", missingShots.length === 0, missingShots.join(" "));
 
   const context = await browser.newContext({
     viewport: { width: 1280, height: 900 },
@@ -96,7 +92,7 @@ try {
     });
     const url = `${SITE_URL}${path}`;
     const missing = [
-      !head.title.includes("달살림") && "제목",
+      !head.title.includes("또링 가계부") && "제목",
       head.description.length < 20 && "설명",
       head.canonical !== url && "대표 주소",
       head.ogUrl !== url && "공유 주소",
@@ -171,36 +167,40 @@ try {
   ok("다시 누르면 밝게", (await background()) === light);
 
   // ── 이동 ────────────────────────────────────────────────────
-  await page.click(".site-nav a");
-  await page.waitForURL("**/use/");
-  ok("머리 메뉴 → 활용", (await page.getAttribute(".site-nav a", "aria-current")) === "page");
-  await page.click(".use .card");
-  await page.waitForURL(/\/use\/.+\/$/);
-  ok("목록 → 글", (await page.locator("h1").count()) === 1);
+  const nav = await page.$$eval(".site-nav a", (links) => links.map((link) => link.href));
+  ok(
+    "머리 메뉴 — 구역 둘과 도움말",
+    nav.length === 3 && nav[2] === "https://api.dabutdev.com/help",
+    nav.join(" "),
+  );
+  for (const href of nav.filter((link) => link.includes("#"))) {
+    const id = href.split("#")[1];
+    ok(`메뉴가 가리키는 구역 #${id} 이 있음`, (await page.locator(`#${id}`).count()) === 1);
+  }
   const footer = await page.$$eval(".site-footer a", (links) => links.map((link) => link.href));
-  ok("꼬리말 링크 넷", footer.length === 4, footer.join(" "));
+  ok("꼬리말 링크 다섯", footer.length === 5, footer.join(" "));
 
   // ── 움직임 ──────────────────────────────────────────────────
   await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
   const moving = await page.evaluate(
-    () => getComputedStyle(document.querySelector(".home .swap .after")).animationName,
+    () => getComputedStyle(document.querySelector(".home .hero-stage .center")).animationName,
   );
-  ok("홈의 예시가 움직임", moving === "home-in", moving);
+  ok("홈의 폰이 떠 있음", moving === "home-float", moving);
 
   const calm = await browser.newContext({ reducedMotion: "reduce" });
   const calmPage = await calm.newPage();
   await calmPage.goto(`${BASE}/`, { waitUntil: "networkidle" });
-  const still = await calmPage.evaluate(() => {
-    const style = (selector) => getComputedStyle(document.querySelector(selector));
-    return [
-      style(".home .swap .after").animationName,
-      style(".home .swap .before").opacity,
-      style(".home .swap .after").opacity,
-    ];
-  });
+  const still = await calmPage.evaluate(() =>
+    [".home .hero-stage .center", ".home .marquee-track", ".home .aurora i", ".home .reveal"].map(
+      (selector) => {
+        const style = getComputedStyle(document.querySelector(selector));
+        return `${style.animationName}/${style.opacity}`;
+      },
+    ),
+  );
   ok(
-    "움직임 줄이기를 켜면 멈추고 바뀐 뒤 모습",
-    still[0] === "none" && still[1] === "0" && still[2] === "1",
+    "움직임 줄이기를 켜면 멈추고 다 보임",
+    still.every((value) => value.startsWith("none/") && !value.endsWith("/0")),
     still.join(","),
   );
 

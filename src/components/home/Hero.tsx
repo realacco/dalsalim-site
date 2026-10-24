@@ -1,19 +1,15 @@
 import "./hero.css";
 
-import Link from "next/link";
-
-import { ROUTES } from "@/config/routes";
 import { PlatformStatus } from "@/components/PlatformStatus";
+import { Phone } from "@/components/Phone";
+import { HELP } from "@/config/site";
 
-import { won } from "@/lib/format";
-
-/* 화면 그림의 값은 전부 지어낸 것이다 */
-const FIXED = { before: 200_000, after: 212_000 };
-
+/** 첫 화면 — 큰 제목과 부채꼴로 선 폰 세 대. 뒤에서 파스텔 빛이 천천히 번진다 */
 export function Hero() {
   return (
     <section className="hero">
-      <div className="glow" aria-hidden="true">
+      <div className="aurora" aria-hidden="true">
+        <i />
         <i />
         <i />
         <i />
@@ -21,61 +17,49 @@ export function Hero() {
       <div className="wrap">
         <div className="hero-copy">
           <ul className="kinds" aria-label="가계부 종류">
-            <li style={{ "--dot": "var(--kind-personal)" } as React.CSSProperties}>내 것</li>
-            <li style={{ "--dot": "var(--kind-family)" } as React.CSSProperties}>가족</li>
-            <li style={{ "--dot": "var(--kind-trip)" } as React.CSSProperties}>여행</li>
+            <li data-kind="personal">나</li>
+            <li data-kind="family">가족</li>
+            <li data-kind="trip">여행</li>
           </ul>
           <h1>
-            살림을 한곳에 적는 <em>종합 가계부</em>
+            나 · 가족 · 여행,
+            <br />
+            <em className="grad-text">가계부 세 권</em>을<br className="only-wide" /> 한 앱에서
           </h1>
-          <p className="hero-lede">내 가계부, 가족 가계부, 여행 가계부를 한 앱에서 적어요.</p>
+          <p className="hero-lede">
+            혼자 쓰는 내 가계부, 같이 결산하는 가족 가계부, 외화로 적는 여행 가계부. 광고 없이,
+            소비를 평가하지 않고 보여 주기만 해요.
+          </p>
           <PlatformStatus />
-          <Link href={ROUTES.use} className="btn btn-ghost">
-            어떻게 쓰는지 보기 ›
-          </Link>
+          <a href={HELP.href} className="btn btn-ghost">
+            도움말 보기 ›
+          </a>
         </div>
 
-        {/* 꾸미는 그림이다. 읽어 주는 도구에는 한 문장으로만 전한다 */}
-        <div
-          className="stage"
-          role="img"
-          aria-label="달살림 화면 예시. 고정비 목록에서 관리비가 지난달보다 12,000원 늘었고, 그 줄에만 이유 칸이 열려 있어요."
-        >
-          <div className="stage-back lift" aria-hidden="true">
-            여행 정산 (예시)
-            <br />
-            민호 → 지수 {won(34_500)}
-          </div>
-          <div className="stage-main lift" aria-hidden="true">
-            <p className="tiny">10월 고정비 (예시)</p>
-            <div className="row">
-              <span>통신비</span>
-              <span className="amount">{won(89_000)}</span>
-            </div>
-            <div className="row">
-              <span>관리비</span>
-              <span className="amount">
-                <span className="swap">
-                  <span className="before">{won(FIXED.before)}</span>
-                  <span className="after">{won(FIXED.after)}</span>
-                </span>
-                <span className="delta">지난달보다 +{won(FIXED.after - FIXED.before)}</span>
-              </span>
-            </div>
-            <div className="reason">
-              <div>
-                <p>이유 (안 적어도 돼요)</p>
-              </div>
-            </div>
-            <div className="row">
-              <span>보험</span>
-              <span className="amount">{won(154_000)}</span>
-            </div>
-          </div>
-          <div className="stage-front lift" aria-hidden="true">
-            남은 예산 (예시)
-            <b>{won(182_400)}</b>
-          </div>
+        <div className="hero-stage">
+          <Phone
+            shot="trip-records"
+            className="side left"
+            alt="여행 가계부 화면 예시. 오사카 여행의 날짜별 지출이 엔화와 원화로 적혀 있어요."
+          />
+          <Phone
+            shot="family-summary"
+            className="side right"
+            alt="가족 가계부 요약 화면 예시. 9월 총 지출과 이번 달 달라진 항목이 보여요."
+          />
+          <Phone
+            shot="personal-records"
+            className="center"
+            eager
+            alt="내 가계부 내역 화면 예시. 남은 예산 578,400원과 날짜별 지출이 보여요."
+          />
+          <p className="float-chip chip-budget" aria-hidden="true">
+            남은 예산
+            <b>578,400원</b>
+          </p>
+          <p className="float-chip chip-free" aria-hidden="true">
+            광고 없는 가계부
+          </p>
         </div>
       </div>
     </section>

@@ -1,0 +1,149 @@
+/*
+  약속 — 밝게 · 어둡게 모두 짙은 남색 띠다. 그 위 글자색도 테마와 상관없이 밤하늘 토큰이다.
+  뒤에서 보라 · 파랑 빛 둘이 천천히 돈다.
+*/
+.home .promises {
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--night-a), var(--night-b));
+  color: var(--night-ink);
+}
+
+.home .night-sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.home .night-sky i {
+  position: absolute;
+  width: 60%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.55;
+  animation: home-orbit 22s linear infinite;
+}
+
+.home .night-sky i:nth-child(1) {
+  left: -15%;
+  top: -20%;
+  background: var(--aura-violet);
+}
+
+.home .night-sky i:nth-child(2) {
+  right: -20%;
+  bottom: -25%;
+  background: var(--aura-blue);
+  animation-direction: reverse;
+}
+
+@keyframes home-orbit {
+  to {
+    transform: rotate(360deg) translateX(8%) rotate(-360deg);
+  }
+}
+
+.home .promises .wrap {
+  position: relative;
+  display: grid;
+  gap: 48px;
+  padding-block: 96px;
+}
+
+.home .promises .eyebrow {
+  color: var(--aura-sky);
+}
+
+.home .promises .section-head .soft {
+  color: var(--night-soft);
+}
+
+.home .promise-grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.home .promise {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-xl);
+  border: 1px solid var(--night-line);
+  border-radius: var(--radius-sheet);
+  background: var(--night-card);
+  backdrop-filter: blur(10px);
+}
+
+.home .promise-index {
+  font-size: var(--text-small);
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--aura-sky);
+}
+
+.home .promise h3 {
+  font-size: var(--home-tile-title);
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
+.home .promise p,
+.home .care li {
+  color: var(--night-soft);
+  line-height: 1.6;
+}
+
+.home .care {
+  display: grid;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+  border-radius: var(--radius-sheet);
+  border: 1px solid var(--night-line);
+}
+
+.home .care h3 {
+  font-size: var(--text-title);
+  font-weight: 800;
+}
+
+.home .care ul {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.home .care li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.home .care li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--aura-sky);
+}
+
+.home .care a {
+  color: var(--night-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 760px) {
+  .home .promise-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1040px) {
+  .home .promises .wrap {
+    padding-block: 128px;
+  }
+
+  .home .promise-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

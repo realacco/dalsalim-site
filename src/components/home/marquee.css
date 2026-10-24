@@ -1,0 +1,36 @@
+/* 흘러가는 기능 띠. 40초에 한 바퀴, 「움직임 줄이기」면 첫 벌이 가만히 선다(둘째 벌은 화면 밖) */
+.home .marquee {
+  overflow: hidden;
+  padding-block: var(--space-xl);
+  border-block: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  /* 양 끝이 바탕으로 녹아든다 */
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.home .marquee-track {
+  display: flex;
+  width: max-content;
+  animation: home-marquee 40s linear infinite;
+}
+
+.home .marquee ul {
+  display: flex;
+  gap: var(--space-md);
+  padding-right: var(--space-md);
+}
+
+.home .marquee li {
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-pill);
+  background: var(--kind-soft, var(--surface-muted));
+  color: var(--kind, var(--ink));
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@keyframes home-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}

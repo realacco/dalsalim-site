@@ -1,25 +1,75 @@
-/* 끝 인사 — 로고와 상태 버튼. */
+/* 맨 끝 — 로고 둘레를 그라데이션 고리가 천천히 돈다 */
 .home .closing .wrap {
   position: relative;
   display: grid;
   justify-items: center;
   gap: var(--space-lg);
-  padding-block: 40px 64px;
+  padding-block: 104px 120px;
   text-align: center;
 }
 
-.home .closing svg {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-lg);
+.home .logo-ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 132px;
+  height: 132px;
+  margin-bottom: var(--space-lg);
+}
+
+.home .logo-ring::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--aura-blue),
+    var(--aura-violet),
+    var(--aura-sky),
+    var(--aura-peach),
+    var(--aura-blue)
+  );
+  filter: blur(18px);
+  opacity: 0.6;
+  animation: home-spin 12s linear infinite;
+}
+
+.home .logo-ring svg {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  filter: drop-shadow(0 12px 24px color-mix(in srgb, var(--aura-blue) 30%, transparent));
+}
+
+@keyframes home-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .home .closing h2 {
-  font-size: var(--text-display);
-  letter-spacing: -0.8px;
-  font-weight: 700;
+  font-size: var(--home-title-md);
+  line-height: 1.15;
+  letter-spacing: -1.4px;
+  font-weight: 800;
+}
+
+.home .closing .soft {
+  color: var(--ink-soft);
+  font-size: var(--text-body-lg);
 }
 
 .home .closing .actions {
   justify-content: center;
+}
+
+.home .text-link {
+  color: var(--primary);
+  font-weight: 600;
+  padding: var(--space-sm);
+}
+
+.home .text-link:hover {
+  text-decoration: underline;
 }

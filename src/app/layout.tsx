@@ -17,7 +17,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: { default: SITE.title, template: `%s — ${SITE.name}` },
   applicationName: SITE.name,
-  keywords: ["달살림", "가계부", "가족 가계부", "개인 가계부", "여행 가계부", "가계부 앱"],
+  keywords: [
+    "또링 가계부",
+    "가계부",
+    "가족 가계부",
+    "부부 가계부",
+    "개인 가계부",
+    "여행 가계부",
+    "가계부 앱",
+  ],
   ...pageMetadata({ description: SITE.description, path: ROUTES.home }),
   // 전화번호처럼 보이는 금액을 폰 브라우저가 전화 링크로 바꾸지 않게
   formatDetection: { telephone: false },

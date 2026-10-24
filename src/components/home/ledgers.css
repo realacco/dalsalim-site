@@ -1,0 +1,142 @@
+/*
+  가계부 세 권. 넓은 화면에서는 글과 폰 두 대가 좌우로 서고 한 권마다 자리를 바꾼다.
+  폰 뒤의 빛은 그 가계부 종류의 색이다 — 종류를 가를 뿐 상태를 말하지 않는다.
+*/
+.home .ledgers .wrap {
+  display: grid;
+  gap: 88px;
+  padding-block: 88px;
+}
+
+.home .ledger {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+
+.home .ledger-text {
+  display: grid;
+  gap: var(--space-lg);
+  justify-items: start;
+}
+
+.home .ledger-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--kind-soft);
+  color: var(--kind);
+  font-size: var(--text-small);
+  font-weight: 700;
+}
+
+.home .ledger h3 {
+  font-size: var(--text-display);
+  line-height: 1.25;
+  letter-spacing: -0.8px;
+  font-weight: 800;
+}
+
+.home .ledger .soft {
+  color: var(--ink-soft);
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+  max-width: 44ch;
+}
+
+.home .points {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.home .points li {
+  position: relative;
+  padding-left: 28px;
+  line-height: 1.55;
+}
+
+/* 체크 표시 — 종류 색 동그라미 안의 흰 꺾쇠 */
+.home .points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--kind);
+}
+
+.home .points li::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: calc(0.2em + 4px);
+  width: 5px;
+  height: 8px;
+  border: solid var(--surface);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.home .ledger-shots {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  /* 두 폰의 높이가 같아야 한다 — 늘이면 틀만 길어져 사진 아래가 빈다 */
+  align-items: flex-start;
+  gap: var(--space-lg);
+  padding-block: var(--space-xl);
+}
+
+.home .ledger-shots .phone {
+  position: relative;
+  z-index: 1;
+  width: min(42vw, 230px);
+}
+
+.home .ledger-shots .phone:nth-of-type(2) {
+  margin-top: 48px;
+}
+
+.home .ledger-glow {
+  position: absolute;
+  inset: 8% 4%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--kind) 30%, transparent),
+    transparent
+  );
+  filter: blur(24px);
+  animation: home-breathe 10s ease-in-out infinite;
+}
+
+@keyframes home-breathe {
+  50% {
+    transform: scale(1.12);
+    opacity: 0.7;
+  }
+}
+
+@media (min-width: 1040px) {
+  .home .ledgers .wrap {
+    gap: 128px;
+    padding-block: 120px;
+  }
+
+  .home .ledger {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+
+  .home .ledger:nth-of-type(even) .ledger-text {
+    order: 2;
+  }
+
+  .home .ledger h3 {
+    font-size: var(--text-display-lg);
+  }
+}
