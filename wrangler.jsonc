@@ -4,10 +4,15 @@
   Cloudflare 대시보드의 「저장소 가져오기」가 이 파일을 읽는다. 대시보드에 적는 것은 둘뿐이다:
     빌드 명령  npm run build
     배포 명령  npx wrangler deploy
+
+  main 이 아닌 브랜치(PR)는 Cloudflare 가 `npx wrangler preview` 로 미리보기 주소를 만든다.
+  그 명령은 아래 `previews` 칸이 있어야 돈다 — 없으면 PR 마다 「Workers Builds」가 실패한다.
 */
 {
   "name": "dalsalim-site",
   "compatibility_date": "2026-10-11",
+  // 미리보기도 위와 같은 설정으로 만든다 — 빈 칸이면 된다
+  "previews": {},
   "assets": {
     "directory": "./out",
     // 없는 주소에는 out/404.html 을 404 로 준다. 기본값이면 빈 404 가 나간다

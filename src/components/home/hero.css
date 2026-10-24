@@ -1,4 +1,7 @@
-/* 첫 화면 — 큰 제목과 겹친 카드 셋. 가운데 카드의 예시는 9초마다 바뀐다. */
+/*
+  첫 화면 — 큰 제목, 부채꼴의 폰 세 대, 떠 있는 작은 카드 둘.
+  폰은 천천히 오르내리고(home-float), 뒤의 빛은 16초에 한 번 자리를 옮긴다. 「움직임 줄이기」면 가만히 선다.
+*/
 .home .hero {
   padding-top: var(--header-height);
 }
@@ -6,8 +9,8 @@
 .home .hero .wrap {
   position: relative;
   display: grid;
-  gap: 40px;
-  padding-block: var(--space-xxl) 56px;
+  gap: 48px;
+  padding-block: var(--space-xxl) 72px;
 }
 
 .home .hero-copy {
@@ -23,9 +26,12 @@
   flex-wrap: wrap;
   gap: 6px var(--space-md);
   padding: 6px 14px;
+  border: 1px solid var(--line);
   border-radius: var(--radius-pill);
-  background: var(--surface);
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  backdrop-filter: blur(8px);
   font-size: var(--text-small);
+  font-weight: 600;
   color: var(--ink-soft);
 }
 
@@ -36,179 +42,130 @@
   height: 8px;
   margin-right: 6px;
   border-radius: 50%;
-  background: var(--dot);
+  background: var(--kind);
 }
 
 .home .hero h1 {
   font-size: var(--text-display-lg);
-  line-height: 1.2;
+  line-height: 1.18;
   letter-spacing: -1.2px;
   font-weight: 800;
-  text-wrap: balance;
 }
 
-/* 형광펜 밑줄 */
-.home .hero h1 em {
-  font-style: normal;
-  background: linear-gradient(
-    transparent 62%,
-    color-mix(in srgb, var(--primary) 24%, transparent) 0
-  );
+.home .hero h1 .only-wide {
+  display: none;
 }
 
 .home .hero-lede {
   font-size: var(--text-body-lg);
-  line-height: 1.45;
+  line-height: 1.55;
   color: var(--ink-soft);
-  max-width: 34ch;
+  max-width: 36ch;
 }
 
-/* 겹친 카드 셋 — 가운데 고정비, 뒤에 여행 정산, 앞에 남은 예산 */
-.home .stage {
+/* ── 폰 세 대 ───────────────────────── */
+.home .hero-stage {
   position: relative;
-  /* 위는 뒤 카드의 두 줄이, 아래는 앞 카드가 보일 만큼 비운다 */
-  padding: 64px 6px 40px;
+  display: grid;
+  place-items: center;
   min-width: 0;
+  padding-block: var(--space-lg) var(--space-xxl);
 }
 
-.home .stage-main {
+.home .hero-stage .phone {
+  width: min(62vw, 260px);
+}
+
+.home .hero-stage .center {
   position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  padding: var(--space-screen);
-  border-radius: var(--radius-sheet);
-  background: var(--surface);
+  z-index: 2;
+  animation: home-float 7s ease-in-out infinite;
 }
 
-.home .stage-back {
+.home .hero-stage .side {
   position: absolute;
+  top: 12%;
+  width: min(48vw, 210px);
+  opacity: 0.92;
+}
+
+.home .hero-stage .left {
+  left: 0;
+  transform: rotate(-8deg);
+  animation: home-float-left 8s ease-in-out infinite;
+}
+
+.home .hero-stage .right {
   right: 0;
-  top: 0;
-  width: 64%;
-  padding: var(--space-md) var(--space-lg) 40px;
+  transform: rotate(8deg);
+  animation: home-float-right 9s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+.home .float-chip {
+  position: absolute;
+  z-index: 3;
+  padding: 10px var(--space-lg);
+  border: 1px solid color-mix(in srgb, var(--surface) 60%, transparent);
   border-radius: var(--radius-card);
-  background: var(--primary-soft);
-  color: var(--primary);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--home-lift);
   font-size: var(--text-small);
   font-weight: 600;
-  transform: rotate(4deg);
+  color: var(--ink-soft);
+  animation: home-float 6s ease-in-out infinite;
 }
 
-.home .stage-front {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: 2;
-  padding: 10px var(--space-lg);
-  border-radius: var(--radius-card);
-  background: var(--primary);
-  color: var(--primary-ink);
-  font-size: var(--text-small);
-  transform: rotate(-3deg);
-}
-
-.home .stage-front b {
+.home .float-chip b {
   display: block;
   font-size: var(--text-title);
+  color: var(--primary);
   font-variant-numeric: tabular-nums;
 }
 
-/*
-  9초마다 되풀이 — 관리비가 바뀌고 이유 칸이 열렸다 닫힌다.
-  가만히 선 모습(움직임 줄이기 · 첫 그림)은 바뀐 뒤다. 금액은 굴러 올라가지 않고 한 번에 바뀌어 나타난다.
-*/
-.home .swap {
-  display: grid;
+.home .chip-budget {
+  left: 0;
+  bottom: 6%;
+  animation-delay: -2s;
 }
 
-.home .swap > span {
-  grid-area: 1 / 1;
+.home .chip-free {
+  right: 0;
+  top: 2%;
+  color: var(--ink);
+  animation-delay: -4s;
 }
 
-.home .swap .before {
-  opacity: 0;
-  animation: home-out 9s infinite;
+@keyframes home-float {
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
-.home .swap .after,
-.home .delta {
-  animation: home-in 9s infinite;
-}
-
-.home .delta {
-  display: block;
-  font-size: var(--text-small);
-  font-weight: 400;
-  color: var(--up-ink);
-}
-
-.home .reason {
-  display: grid;
-  grid-template-rows: 1fr;
-  animation: home-open 9s infinite;
-}
-
-.home .reason > div {
-  overflow: hidden;
-}
-
-.home .reason p {
-  margin-bottom: 10px;
-  padding: 10px var(--space-md);
-  border-radius: var(--radius-md);
-  background: var(--bg);
-  color: var(--ink-faint);
-}
-
-@keyframes home-out {
+@keyframes home-float-left {
   0%,
-  30% {
-    opacity: 1;
-  }
-  36%,
-  94% {
-    opacity: 0;
-  }
   100% {
-    opacity: 1;
+    transform: rotate(-8deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-6deg) translateY(-10px);
   }
 }
 
-@keyframes home-in {
+@keyframes home-float-right {
   0%,
-  30% {
-    opacity: 0;
-  }
-  36%,
-  94% {
-    opacity: 1;
-  }
   100% {
-    opacity: 0;
+    transform: rotate(8deg) translateY(0);
   }
-}
-
-@keyframes home-open {
-  0%,
-  42% {
-    grid-template-rows: 0fr;
-    opacity: 0;
-  }
-  52%,
-  94% {
-    grid-template-rows: 1fr;
-    opacity: 1;
-  }
-  100% {
-    grid-template-rows: 0fr;
-    opacity: 0;
+  50% {
+    transform: rotate(6deg) translateY(-10px);
   }
 }
 
 @media (min-width: 760px) {
   .home .hero .wrap {
-    padding-block: 48px 64px;
+    padding-block: 56px 88px;
   }
 
   .home .hero h1 {
@@ -216,16 +173,18 @@
     letter-spacing: -1.6px;
   }
 
-  .home .stage {
-    max-width: 440px;
+  .home .hero-stage {
+    max-width: 560px;
+    width: 100%;
+    margin-inline: auto;
   }
 }
 
 @media (min-width: 1040px) {
   .home .hero .wrap {
-    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
-    padding-block: 64px 80px;
+    padding-block: 72px 104px;
   }
 
   .home .hero h1 {
@@ -233,7 +192,15 @@
     letter-spacing: -2px;
   }
 
-  .home .stage {
-    max-width: none;
+  .home .hero h1 .only-wide {
+    display: inline;
+  }
+
+  .home .hero-stage .phone {
+    width: 270px;
+  }
+
+  .home .hero-stage .side {
+    width: 220px;
   }
 }

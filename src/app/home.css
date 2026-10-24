@@ -1,12 +1,13 @@
 /*
   홈.
 
-  화려함은 이 한 장에만 둔다 — 큰 제목 · 번지는 파랑 · 겹친 카드 · 바뀌는 예시.
-  색은 전부 토큰이다. 거의 흰 바탕에 파랑 하나로 강조하고, 가계부 종류 색은 꼬리표와 작은 상자에만 쓴다.
-  배치는 760px(세 칸) · 1040px(좌우 두 단)에서 바뀐다.
+  화려함은 이 한 장에만 둔다 — 번지는 파스텔 빛 · 그라데이션 제목 · 떠 있는 폰 · 흘러가는 기능 띠 · 스크롤하면 떠오르는 칸.
+  색은 전부 토큰이다. 흰 바탕에 파랑 하나로 강조하고, 빛과 그라데이션은 꾸밈일 뿐 뜻을 싣지 않는다.
+  배치는 760px · 1040px 에서 바뀐다.
 
   이 파일에는 홈의 여러 구역이 같이 쓰는 것만 둔다. 구역마다의 모양은 그 컴포넌트 옆의 파일에 있다
   (`src/components/home/*.css`). 모든 규칙이 `.home` 아래라 다른 페이지로 새지 않는다.
+  「움직임 줄이기」면 `globals.css` 가 모든 움직임을 끈다 — 멈춘 모습이 완성된 화면이다.
 */
 .home {
   position: relative;
@@ -19,56 +20,143 @@
   position: relative;
 }
 
-.home .lift {
-  box-shadow: var(--home-lift);
-}
-
-.home .glow {
+/* ── 번지는 빛 — 첫 화면과 맨 끝 ───────────── */
+.home .aurora {
   position: absolute;
   inset: 0;
+  overflow: hidden;
   pointer-events: none;
+  /* 구역 끝에서 바탕으로 녹아든다 — 안 그러면 빛이 구역 경계에서 칼같이 잘린다 */
+  mask-image: linear-gradient(transparent, #000 18%, #000 72%, transparent);
 }
 
-.home .glow i {
+/* 첫 화면은 위가 머리 뒤로 이어지므로 아래만 녹인다 */
+.home .hero .aurora {
+  mask-image: linear-gradient(#000 70%, transparent);
+}
+
+.home .aurora i {
   position: absolute;
-  width: 70%;
+  width: 62%;
   aspect-ratio: 1;
   border-radius: 50%;
-  filter: blur(56px);
+  filter: blur(64px);
+  opacity: 0.5;
   animation: home-drift 16s ease-in-out infinite alternate;
 }
 
-.home .glow i:nth-child(1) {
-  background: color-mix(in srgb, var(--primary) 24%, transparent);
-  left: -22%;
-  top: -12%;
+.home .aurora i:nth-child(1) {
+  background: var(--aura-blue);
+  left: -20%;
+  top: -18%;
 }
 
-.home .glow i:nth-child(2) {
-  background: color-mix(in srgb, var(--primary) 14%, transparent);
-  right: -28%;
-  top: 6%;
+.home .aurora i:nth-child(2) {
+  background: var(--aura-violet);
+  right: -22%;
+  top: 4%;
   animation-delay: -5s;
 }
 
-/* 로고의 살구색이 작게 한 점 */
-.home .glow i:nth-child(3) {
-  width: 34%;
-  background: color-mix(in srgb, var(--brand-dot) 20%, transparent);
-  left: 30%;
+.home .aurora i:nth-child(3) {
+  width: 44%;
+  background: var(--aura-sky);
+  left: 26%;
   bottom: -14%;
   animation-delay: -9s;
 }
 
+/* 로고의 따뜻한 한 점 */
+.home .aurora i:nth-child(4) {
+  width: 26%;
+  background: var(--aura-peach);
+  right: 8%;
+  bottom: 6%;
+  opacity: 0.35;
+  animation-delay: -12s;
+}
+
 @keyframes home-drift {
   to {
-    transform: translate(6%, 8%) scale(1.12);
+    transform: translate(8%, 10%) scale(1.15);
   }
 }
 
-/* 구역 위의 작은 이름표 — 이야기 · 통계 칸이 같이 쓴다 */
-.home .label {
+/* 어둡게에서는 빛을 줄인다 — 짙은 바탕에서 같은 세기면 글자보다 빛이 앞에 선다 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .home .aurora i {
+    opacity: 0.28;
+  }
+}
+
+:root[data-theme="dark"] .home .aurora i {
+  opacity: 0.28;
+}
+
+/* ── 그라데이션 글자 ─────────────────── */
+.home .grad-text {
+  font-style: normal;
+  background: var(--grad-ink);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: home-shimmer 8s ease-in-out infinite alternate;
+}
+
+@keyframes home-shimmer {
+  to {
+    background-position: 100% 0;
+  }
+}
+
+/* ── 구역의 머리 ─────────────────────── */
+.home .section-head {
+  display: grid;
+  gap: var(--space-md);
+  max-width: 640px;
+}
+
+.home .eyebrow {
   font-size: var(--text-small);
-  font-weight: 600;
-  color: var(--kind, var(--ink-faint));
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: var(--primary);
+}
+
+.home .section-head h2 {
+  font-size: var(--text-display);
+  line-height: 1.2;
+  letter-spacing: -1px;
+  font-weight: 800;
+}
+
+.home .section-head .soft {
+  color: var(--ink-soft);
+  font-size: var(--text-body-lg);
+}
+
+@media (min-width: 760px) {
+  .home .section-head h2 {
+    font-size: var(--home-title-md);
+    letter-spacing: -1.6px;
+  }
+}
+
+/*
+  스크롤하면 아래에서 떠오른다. 스크롤에 묶인 애니메이션을 아는 브라우저만 — 모르는 브라우저는 처음부터 선 모습이다
+*/
+@supports (animation-timeline: view()) {
+  .home .reveal {
+    animation: home-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 28%;
+  }
+}
+
+@keyframes home-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
 }

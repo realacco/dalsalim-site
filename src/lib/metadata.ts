@@ -7,7 +7,7 @@ const SHARE_IMAGE = {
   url: "/opengraph-image.png",
   width: 1200,
   height: 630,
-  alt: `${SITE.name} — 살림을 한곳에 적는 종합 가계부`,
+  alt: `${SITE.name} — 나 · 가족 · 여행, 가계부 세 권을 한 앱에서`,
 };
 
 type PageMeta = {

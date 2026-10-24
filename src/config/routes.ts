@@ -1,3 +1,5 @@
+import { HELP } from "./site";
+
 /*
   사이트 안의 주소. 링크 · 대표 주소 · 사이트맵이 전부 여기서 가져간다 —
   주소를 글자로 여러 곳에 적어 두면 하나를 바꿀 때 나머지가 조용히 끊긴다.
@@ -5,13 +7,21 @@
 */
 export const ROUTES = {
   home: "/",
-  use: "/use/",
-  // 이름이 use 로 시작하면 린트가 React 훅으로 본다
-  article: (slug: string) => `/use/${slug}/`,
 } as const;
 
-/** 머리에 서는 메뉴. 페이지를 더하면 여기에 한 줄을 더한다 */
-export const NAV = [{ label: "활용", href: ROUTES.use }] as const;
+/** 홈 안의 구역 — 머리 메뉴가 그 자리로 내려간다 */
+export const SECTIONS = {
+  ledgers: "ledgers",
+  features: "features",
+  promises: "promises",
+} as const;
 
-/** 활용 글의 화면 사진이 놓인 자리 (`public/use/`) */
-export const USE_FIGURE_DIR = "/use";
+/**
+ * 머리에 서는 메뉴. 홈의 구역과 도움말(앱 서버의 페이지)이다.
+ * `external` 은 이 사이트 밖이라 새 창 표시 없이 그 주소로 간다.
+ */
+export const NAV = [
+  { label: "가계부", href: `${ROUTES.home}#${SECTIONS.ledgers}`, external: false },
+  { label: "기능", href: `${ROUTES.home}#${SECTIONS.features}`, external: false },
+  { label: HELP.label, href: HELP.href, external: true },
+] as const;

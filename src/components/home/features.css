@@ -1,0 +1,181 @@
+/*
+  기능 묶음 — 넓은 칸(알림함 · 화면) · 자산 · 작은 칸 셋의 격자다.
+  칸은 띠의 땅(--bg-group) 위 흰 면이고, 칸 위에 마우스를 올리면 살짝 떠오른다.
+*/
+.home .features {
+  background: var(--bg-group);
+}
+
+.home .features .wrap {
+  display: grid;
+  gap: 48px;
+  padding-block: 96px;
+}
+
+.home .bento {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.home .tile {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: var(--space-xl);
+  padding: var(--space-xl);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sheet);
+  background: var(--surface);
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+
+.home .tile:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--home-lift);
+}
+
+.home .tile-text {
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
+}
+
+.home .tile-label {
+  font-size: var(--text-small);
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.home .tile h3 {
+  font-size: var(--home-tile-title);
+  letter-spacing: -0.4px;
+  font-weight: 800;
+}
+
+.home .tile .soft {
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* 큰 칸의 폰은 칸 아래로 잘려 들어간다 — 화면의 윗부분만 보이면 충분하다 */
+.home .tile-shots {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-bottom: calc(-1 * var(--space-xl) - 120px);
+}
+
+.home .tile-shots .phone {
+  /* 폰 폭에서 두 대가 칸 안에 나란히 든다 */
+  width: min(36vw, 220px);
+  transition: transform 0.4s;
+}
+
+.home .tile:hover .tile-shots .phone {
+  transform: translateY(-8px);
+}
+
+.home .tile-inbox {
+  background:
+    radial-gradient(
+      120% 80% at 100% 100%,
+      color-mix(in srgb, var(--aura-sky) 28%, transparent),
+      transparent 60%
+    ),
+    var(--surface);
+}
+
+.home .tile-assets {
+  background:
+    radial-gradient(
+      110% 80% at 0% 100%,
+      color-mix(in srgb, var(--aura-blue) 22%, transparent),
+      transparent 60%
+    ),
+    var(--surface);
+}
+
+.home .tile-theme {
+  background:
+    radial-gradient(
+      110% 80% at 100% 100%,
+      color-mix(in srgb, var(--aura-violet) 26%, transparent),
+      transparent 60%
+    ),
+    var(--surface);
+}
+
+.home .accents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.home .accents li {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  /* 핑크 · 베이지처럼 옅은 견본도 흰 면에서 갈린다 */
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+.home .tile-small {
+  align-content: start;
+  gap: var(--space-sm);
+}
+
+.home .tile-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: var(--space-xs);
+  border-radius: var(--radius-md);
+  background: var(--primary-soft);
+}
+
+.home .tile-icon svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (min-width: 760px) {
+  .home .bento {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home .tile-wide {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1040px) {
+  .home .features .wrap {
+    padding-block: 128px;
+  }
+
+  .home .bento {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* 알림함은 왼쪽 두 칸, 그 옆에 자산 */
+  .home .tile-inbox {
+    grid-column: 1 / 3;
+  }
+
+  /* 화면 칸은 한 줄을 다 써서 글 옆에 폰이 선다. 알림함은 폰이 둘이라 글 아래에 그대로 둔다 */
+  .home .tile-theme {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}

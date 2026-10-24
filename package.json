@@ -10,9 +10,7 @@
     "format:check": "prettier --check .",
     "check": "node scripts/check.mjs",
     "render:og": "node scripts/render.mjs og",
-    "render:alerts": "node scripts/render.mjs alerts",
-    "shots:crop": "node scripts/crop-shots.mjs",
-    "shots:webp": "node scripts/to-webp.mjs"
+    "shots": "node scripts/shots.mjs"
   },
   "dependencies": {
     "next": "16.4.3",
@@ -32,5 +30,5 @@
     "sharp": "^0.35.5",
     "typescript": "^5"
   },
-  "description": "달살림 소개 사이트 — dalsalim.dabutdev.com"
+  "description": "또링 가계부 소개 사이트 — ddoring.dabutdev.com"
 }

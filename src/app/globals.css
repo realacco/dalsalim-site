@@ -100,9 +100,14 @@ main {
 }
 
 /* ── 머리 ─────────────────────────────── */
+/* 스크롤해도 위에 붙어 있다. 뒤가 비치는 유리 면이라 첫 화면의 빛을 가리지 않는다 */
 .site-header {
-  position: relative;
-  z-index: 2;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: color-mix(in srgb, var(--bg) 66%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
 }
 
 .site-header .wrap {
@@ -123,23 +128,30 @@ main {
 }
 
 .site-logo svg {
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-sm);
+  width: 32px;
+  height: 32px;
+}
+
+.site-nav {
+  display: flex;
+  gap: var(--space-xs);
 }
 
 .site-nav a {
   color: var(--ink-soft);
-  padding: var(--space-sm) var(--space-xs);
+  font-weight: 600;
+  padding: var(--space-sm);
 }
 
-.site-nav a:hover,
-.site-nav a[aria-current="page"] {
+.site-nav a:hover {
   color: var(--ink);
 }
 
-.site-nav a[aria-current="page"] {
-  font-weight: 600;
+/* 폰 폭에서는 홈 안의 구역 메뉴를 접고 도움말만 남긴다 — 스크롤하면 닿는 자리다 */
+@media (max-width: 759px) {
+  .site-nav a:not([data-external]) {
+    display: none;
+  }
 }
 
 .theme-toggle {
@@ -172,6 +184,7 @@ main {
 /* ── 꼬리말 ───────────────────────────── */
 .site-footer {
   border-top: 1px solid var(--line);
+  background: var(--bg);
   font-size: var(--text-small);
   color: var(--ink-soft);
 }
@@ -235,6 +248,7 @@ a.btn:hover {
 }
 
 .btn-ghost {
+  border: 1px solid var(--line-strong);
   background: var(--surface);
   color: var(--ink);
 }
@@ -282,47 +296,22 @@ a.btn-ghost:hover {
 }
 
 /*
-  ── 화면 그림 ──────────────────────────
-  앱 화면을 HTML 로 그린 조각이 같이 쓰는 모양. 이름 — 금액 한 줄, 줄 사이에 선.
+  ── 폰 틀 ────────────────────────────
+  앱 화면 사진을 감싸는 틀(`Phone`). 짙은 테두리 · 둥근 모서리 · 떠 있는 그림자
 */
-.mock .tiny {
-  font-size: var(--text-small);
-  color: var(--ink-faint);
+.phone {
+  padding: 6px;
+  border-radius: 34px;
+  background: var(--phone-bezel);
+  box-shadow:
+    0 30px 60px -24px color-mix(in srgb, var(--ink) 45%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--surface) 10%, transparent);
 }
 
-.mock .soft {
-  color: var(--ink-soft);
-}
-
-.mock .amount {
-  font-variant-numeric: tabular-nums;
-  font-weight: 600;
-  text-align: right;
-  white-space: nowrap;
-}
-
-.mock .sub {
-  display: block;
-  font-size: var(--text-small);
-  font-weight: 400;
-  color: var(--ink-faint);
-}
-
-.mock .row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--space-md);
-  padding: 10px 0;
-  border-top: 1px solid var(--line);
-}
-
-.mock .row:first-child {
-  border-top: 0;
-}
-
-.mock .row > :first-child {
-  min-width: 0;
+.phone img {
+  width: 100%;
+  height: auto;
+  border-radius: 28px;
 }
 
 /* ── 안내 페이지 (없는 주소 등) ─────────── */
