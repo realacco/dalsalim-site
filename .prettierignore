@@ -6,5 +6,6 @@ next-env.d.ts
 AGENTS.md
 wrangler.jsonc
 
-# 구글 서치 콘솔이 내려 준 소유 확인 파일 — 받은 그대로 둔다
+# 구글 서치 콘솔 · 네이버 서치어드바이저가 내려 준 소유 확인 파일 — 받은 그대로 둔다
 public/google*.html
+public/naver*.html
