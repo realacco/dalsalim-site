@@ -30,7 +30,6 @@ export const metadata: Metadata = {
     "더치페이 정산",
     "고정비 관리",
     "예산 관리",
-    "광고 없는 가계부",
   ],
   authors: [{ name: SITE.publisher }],
   creator: SITE.publisher,

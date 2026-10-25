@@ -28,10 +28,6 @@ export const FAQ = [
       "안드로이드에서는 직접 고른 카드사 · 은행 · 페이 앱의 결제 알림을 알림함에 모아 둬요. 넣을지, 어느 분류로 넣을지는 직접 고르고, 켜 둔 곳은 자동으로 적게 할 수도 있어요. 문자는 읽지 않고, 알림 원문은 폰 밖으로 나가지 않아요.",
   },
   {
-    question: "광고가 있나요?",
-    answer: "없어요. 가계부를 쓰는 동안 끼어드는 광고가 없어요.",
-  },
-  {
     question: "아이폰에서도 쓸 수 있나요?",
     answer: "지금은 안드로이드 앱으로 베타 테스트 중이고, iOS 는 준비 중이에요.",
   },
@@ -53,7 +49,7 @@ export function Faq() {
         <div className="faq-list reveal">
           {FAQ.map((item) => (
             <details key={item.question}>
-              <summary>
+              <summary className="ripple">
                 <h3>{item.question}</h3>
               </summary>
               <p>{item.answer}</p>
