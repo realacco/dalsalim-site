@@ -29,7 +29,7 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      className="theme-toggle"
+      className="theme-toggle press"
       onClick={toggle}
       aria-label="밝게 · 어둡게 전환"
       title="밝게 · 어둡게 전환"

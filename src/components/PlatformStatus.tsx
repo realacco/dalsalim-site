@@ -9,7 +9,7 @@ export function PlatformStatus() {
     <div className="actions">
       {PLATFORMS.map((platform) =>
         platform.storeUrl ? (
-          <a key={platform.name} href={platform.storeUrl} className="btn">
+          <a key={platform.name} href={platform.storeUrl} className="btn press">
             {platform.storeLabel}
           </a>
         ) : (

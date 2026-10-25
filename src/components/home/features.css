@@ -26,14 +26,6 @@
   border: 1px solid var(--line);
   border-radius: var(--radius-sheet);
   background: var(--surface);
-  transition:
-    transform 0.25s,
-    box-shadow 0.25s;
-}
-
-.home .tile:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--home-lift);
 }
 
 .home .tile-text {
@@ -71,11 +63,18 @@
 .home .tile-shots .phone {
   /* 폰 폭에서 두 대가 칸 안에 나란히 든다 */
   width: min(36vw, 220px);
-  transition: transform 0.4s;
+  transition: transform 0.6s var(--ease-spring);
 }
 
-.home .tile:hover .tile-shots .phone {
-  transform: translateY(-8px);
+/* 칸이 4 떠오를 때 폰은 한 번 더 — 칸 안에서 폰이 먼저 손을 마중 나온다 */
+@media (hover: hover) {
+  .home .tile:hover .tile-shots .phone {
+    transform: translateY(-10px);
+  }
+
+  .home .tile:hover .tile-shots .phone:nth-child(2) {
+    transition-delay: 60ms;
+  }
 }
 
 .home .tile-inbox {
@@ -98,12 +97,14 @@
     var(--surface);
 }
 
+/* 빛은 고른 강조색이다 — 견본을 누르면 이 칸이 그 색으로 물든다(--pick · AccentPicker) */
 .home .tile-theme {
+  --glow: var(--pick, var(--accent-blue));
   background:
     radial-gradient(
-      110% 80% at 100% 100%,
-      color-mix(in srgb, var(--aura-violet) 26%, transparent),
-      transparent 60%
+      140% 110% at 100% 100%,
+      color-mix(in srgb, var(--pick, var(--aura-violet)) 36%, transparent),
+      transparent 62%
     ),
     var(--surface);
 }
@@ -115,13 +116,25 @@
   margin-top: var(--space-sm);
 }
 
-.home .accents li {
-  width: 28px;
-  height: 28px;
+.home .accents button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
   border-radius: 50%;
   background: var(--accent);
   /* 핑크 · 베이지처럼 옅은 견본도 흰 면에서 갈린다 */
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent);
+  cursor: pointer;
+}
+
+/* 고른 견본은 바깥 고리가 선다 — 앱의 「화면」에서 고른 동그라미와 같다 */
+.home .accents button[aria-pressed="true"] {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent),
+    0 0 0 3px var(--surface),
+    0 0 0 5px var(--accent);
+  transform: scale(1.06);
 }
 
 .home .tile-small {

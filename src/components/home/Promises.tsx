@@ -41,7 +41,7 @@ export function Promises() {
 
         <ul className="promise-grid">
           {PROMISES.map((promise, index) => (
-            <li className="promise reveal" key={promise.title}>
+            <li className="promise reveal" data-tilt="5" key={promise.title}>
               <span className="promise-index" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>

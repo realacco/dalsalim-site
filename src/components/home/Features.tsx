@@ -1,5 +1,6 @@
 import "./features.css";
 
+import { AccentPicker } from "./AccentPicker";
 import { Phone } from "@/components/Phone";
 import { SECTIONS } from "@/config/routes";
 
@@ -52,7 +53,7 @@ export function Features() {
         </header>
 
         <div className="bento">
-          <article className="tile tile-inbox tile-wide reveal">
+          <article className="tile tile-inbox tile-wide reveal" data-tilt="3">
             <div className="tile-text">
               <p className="tile-label">결제 알림함 · 안드로이드</p>
               <h3>카드 · 은행 알림을 모아 둬요</h3>
@@ -73,7 +74,7 @@ export function Features() {
             </div>
           </article>
 
-          <article className="tile tile-assets reveal">
+          <article className="tile tile-assets reveal" data-tilt="3">
             <div className="tile-text">
               <p className="tile-label">자산</p>
               <h3>통장 · 카드 · 현금</h3>
@@ -90,7 +91,7 @@ export function Features() {
           </article>
 
           {SMALL.map((item) => (
-            <article className="tile tile-small reveal" key={item.title}>
+            <article className="tile tile-small reveal" data-tilt="5" key={item.title}>
               <span className="tile-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <path d={item.icon} />
@@ -101,22 +102,12 @@ export function Features() {
             </article>
           ))}
 
-          <article className="tile tile-theme tile-wide reveal">
+          <article className="tile tile-theme tile-wide reveal" data-tilt="3">
             <div className="tile-text">
               <p className="tile-label">화면</p>
               <h3>다크 모드와 강조색 여섯 가지</h3>
               <p className="soft">밝게 · 어둡게와 강조색을 내 마음대로 골라요.</p>
-              <ul className="accents" aria-label="강조색">
-                {ACCENTS.map((accent) => (
-                  <li
-                    key={accent.name}
-                    style={{ "--accent": accent.color } as React.CSSProperties}
-                    title={accent.name}
-                  >
-                    <span className="sr-only">{accent.name}</span>
-                  </li>
-                ))}
-              </ul>
+              <AccentPicker accents={ACCENTS} />
             </div>
             <div className="tile-shots">
               <Phone

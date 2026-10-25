@@ -144,19 +144,67 @@
 }
 
 /*
-  스크롤하면 아래에서 떠오른다. 스크롤에 묶인 애니메이션을 아는 브라우저만 — 모르는 브라우저는 처음부터 선 모습이다
+  스크롤하면 아래에서 떠오른다. 같이 화면에 든 칸은 차례로(--reveal-delay) — 차례와 때는 Motion 이 정한다.
+  숨기는 규칙은 Motion 이 html 에 motion-reveal 을 단 뒤에만 먹는다 — 스크립트가 없거나 「움직임 줄이기」면 처음부터 선 모습이다.
+  전환(transition)이 아니라 애니메이션인 것은 칸의 기울기 · 떠오르기 전환을 덮어쓰지 않으려는 것이다.
+  끝난 뒤에는 칸의 원래 모습으로 돌아간다(backwards) — both 면 끝 모습이 남아 기울기를 막는다
 */
-@supports (animation-timeline: view()) {
-  .home .reveal {
-    animation: home-reveal linear both;
-    animation-timeline: view();
-    animation-range: entry 0% cover 28%;
+@media (prefers-reduced-motion: no-preference) {
+  .motion-reveal .home .reveal:not(.is-shown) {
+    opacity: 0;
+  }
+
+  .motion-reveal .home .reveal.is-shown {
+    animation: home-reveal 0.9s var(--ease-out) var(--reveal-delay, 0ms) backwards;
   }
 }
 
 @keyframes home-reveal {
   from {
     opacity: 0;
-    transform: translateY(40px) scale(0.98);
+    transform: translateY(40px) scale(0.97);
+  }
+}
+
+/*
+  마우스를 따라 기우는 면 (`data-tilt`) — 기울기와 빛의 자리는 Motion 이 건넨다.
+  포인터가 움직이는 동안은 짧게 따라가고(is-tilting), 벗어나면 천천히 바로 선다. 누를 수 없는 칸이라 줄지 않는다
+*/
+.home [data-tilt]:not(.hero) {
+  transform: perspective(1000px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg))
+    translateY(var(--lift, 0px));
+  transition:
+    transform 0.6s var(--ease-out),
+    box-shadow 0.3s;
+}
+
+.home [data-tilt].is-tilting:not(.hero) {
+  transition-duration: 0.15s, 0.3s;
+}
+
+/* 포인터 자리에 번지는 옅은 빛 — 색은 면마다 --glow 로 고른다 */
+.home [data-tilt]:not(.hero)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    360px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    color-mix(in srgb, var(--glow, var(--primary)) 10%, transparent),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+@media (hover: hover) {
+  .home [data-tilt]:not(.hero):hover {
+    --lift: -4px;
+    box-shadow: var(--home-lift);
+  }
+
+  .home [data-tilt]:not(.hero):hover::after {
+    opacity: 1;
   }
 }

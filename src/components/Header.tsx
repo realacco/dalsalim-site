@@ -10,13 +10,18 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="wrap">
-        <Link href={ROUTES.home} className="site-logo">
+        <Link href={ROUTES.home} className="site-logo press">
           <Logo />
           {SITE.name}
         </Link>
         <nav className="site-nav" aria-label="주요 메뉴">
           {NAV.map((item) => (
-            <a key={item.href} href={item.href} data-external={item.external || undefined}>
+            <a
+              key={item.href}
+              href={item.href}
+              className="press"
+              data-external={item.external || undefined}
+            >
               {item.label}
             </a>
           ))}

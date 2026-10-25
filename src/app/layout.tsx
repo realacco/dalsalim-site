@@ -7,6 +7,7 @@ import "./globals.css";
 
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { Motion } from "@/components/Motion";
 import { ROUTES } from "@/config/routes";
 import { SEARCH_VERIFICATION, SITE } from "@/config/site";
 import { META_COLORS, THEME_INIT_SCRIPT } from "@/config/theme";
@@ -77,6 +78,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <Motion />
       </body>
     </html>
   );
