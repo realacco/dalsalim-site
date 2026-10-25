@@ -23,7 +23,7 @@ export function Closing() {
         </h2>
         <p className="soft">나 · 가족 · 여행, 가계부 세 권을 또링 가계부 하나로.</p>
         <PlatformStatus />
-        <a href={HELP.href} className="text-link">
+        <a href={HELP.href} className="text-link press">
           쓰는 법이 궁금하면 도움말 ›
         </a>
       </div>

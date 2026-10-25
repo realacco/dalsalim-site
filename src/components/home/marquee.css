@@ -14,6 +14,13 @@
   animation: home-marquee 40s linear infinite;
 }
 
+/* 마우스를 올리면 멈춰 읽을 수 있다 */
+@media (hover: hover) {
+  .home .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
 .home .marquee ul {
   display: flex;
   gap: var(--space-md);

@@ -108,6 +108,12 @@ main {
   background: color-mix(in srgb, var(--bg) 66%, transparent);
   backdrop-filter: blur(14px) saturate(1.4);
   -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  transition: box-shadow 0.3s;
+}
+
+/* 첫 화면을 벗어나면 아래에 가는 선 — 맨 위에서는 빛이 머리 뒤로 이어지게 선이 없다 */
+.site-header[data-scrolled] {
+  box-shadow: 0 1px 0 var(--line);
 }
 
 .site-header .wrap {
@@ -138,9 +144,12 @@ main {
 }
 
 .site-nav a {
+  /* 줄어드는 눌림은 글자 줄이 아니라 상자에만 걸린다 */
+  display: inline-block;
   color: var(--ink-soft);
   font-weight: 600;
   padding: var(--space-sm);
+  border-radius: var(--radius-md);
 }
 
 .site-nav a:hover {
@@ -230,11 +239,6 @@ main {
   color: var(--primary-ink);
   font-size: var(--text-body-lg);
   font-weight: 600;
-  transition: transform 0.15s;
-}
-
-a.btn:hover {
-  transform: translateY(-1px);
 }
 
 /*
@@ -255,6 +259,81 @@ a.btn:hover {
 
 a.btn-ghost:hover {
   background: var(--surface-pressed);
+}
+
+/*
+  ── 눌림 ─────────────────────────────
+  앱의 `Touchable` 과 같은 말이다 — 누르는 동안 살짝 줄고, 놓으면 튕기듯 돌아온다.
+  누를 수 있는 것(링크 · 버튼)에만 단다. 누를 수 없는 칸이 줄면 무언가 일어날 것처럼 읽힌다 — 그런 칸은 기울기만 한다
+*/
+.press {
+  transition:
+    transform 0.5s var(--ease-spring),
+    background-color 0.2s,
+    color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.press:active {
+  transform: scale(var(--press-scale));
+  transition-duration: 0.12s, 0.2s, 0.2s;
+  transition-timing-function: var(--ease-out);
+}
+
+/*
+  누른 자리에서 퍼지는 면 — 앱의 목록 줄 눌림. 누른 점은 Motion 이 건넨다(--ripple-x · --ripple-y).
+  스크립트가 없으면 점이 안 와서 퍼지지 않고, 줄은 평소대로 눌린다
+*/
+.ripple {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ripple::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: var(--ripple-x, 50%);
+  top: var(--ripple-y, 50%);
+  width: var(--ripple-size, 0);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  translate: -50% -50%;
+  background: var(--surface-pressed);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ripple.is-pressed::before {
+  animation: ripple-spread 0.45s var(--ease-out) both;
+}
+
+.ripple.is-released::before {
+  animation: ripple-fade 0.4s var(--ease-out) both;
+}
+
+@keyframes ripple-spread {
+  from {
+    scale: 0;
+    opacity: 1;
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+@keyframes ripple-fade {
+  from {
+    scale: 1;
+    opacity: 1;
+  }
+  to {
+    scale: 1;
+    opacity: 0;
+  }
 }
 
 /*
@@ -329,6 +408,13 @@ a.btn-ghost:hover {
 
 .notice-page p {
   color: var(--ink-soft);
+}
+
+/* 「움직임 줄이기」면 퍼짐이 꺼지므로 누르는 동안 면만 바뀐다 */
+@media (prefers-reduced-motion: reduce) {
+  .ripple:active {
+    background: var(--surface-pressed);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -70,6 +70,13 @@
   place-items: center;
   min-width: 0;
   padding-block: var(--space-lg) var(--space-xxl);
+  /* 첫 화면 위의 마우스 쪽으로 폰 세 대가 같이 돈다 — 기울기는 Motion 이 첫 화면 전체에서 건넨다 */
+  transform: perspective(1400px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg));
+  transition: transform 0.9s var(--ease-out);
+}
+
+.home .hero.is-tilting .hero-stage {
+  transition-duration: 0.3s;
 }
 
 .home .hero-stage .phone {

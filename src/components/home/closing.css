@@ -65,6 +65,7 @@
 }
 
 .home .text-link {
+  display: inline-block;
   color: var(--primary);
   font-weight: 600;
   padding: var(--space-sm);

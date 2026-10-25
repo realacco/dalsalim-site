@@ -64,6 +64,8 @@
 }
 
 .home .promise {
+  --glow: var(--aura-sky);
+  position: relative;
   display: grid;
   gap: var(--space-sm);
   padding: var(--space-xl);

@@ -5,12 +5,12 @@ import { LEGAL } from "@/config/site";
 
 const PROMISES = [
   {
-    title: "광고가 없어요",
-    text: "가계부를 여는 동안 끼어드는 광고가 없어요.",
-  },
-  {
     title: "소비를 평가하지 않아요",
     text: "「너무 많이 썼어요」 같은 말, 점수 · 등급 · 순위가 없어요. 내역과 통계만 보여 주고, 판단은 쓰는 사람의 몫이에요.",
+  },
+  {
+    title: "분류를 짐작하지 않아요",
+    text: "가게 이름만 보고 분류를 넣지 않아요. 어디에 넣을지는 쓰는 사람이 골라요.",
   },
   {
     title: "세세한 내역은 나만 봐요",
@@ -41,7 +41,7 @@ export function Promises() {
 
         <ul className="promise-grid">
           {PROMISES.map((promise, index) => (
-            <li className="promise reveal" key={promise.title}>
+            <li className="promise reveal" data-tilt="5" key={promise.title}>
               <span className="promise-index" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
