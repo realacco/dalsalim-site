@@ -112,11 +112,11 @@ export function Features() {
             <div className="tile-shots">
               <Phone
                 shot="glance-pink"
-                alt="핑크 강조색을 고른 통계 요약 화면 예시. 10월 총 지출과 이 달 예산이 보여요."
+                alt="핑크 강조색을 고른 월간지표 화면 예시. 10월 총 지출과 이 달 예산이 보여요."
               />
               <Phone
                 shot="personal-spend-dark"
-                alt="어둡게로 본 통계 화면 예시. 분류별 지출 도넛과 목록이 보여요."
+                alt="어둡게로 본 지출 분포 화면 예시. 분류별 지출 도넛과 목록이 보여요."
               />
             </div>
           </article>

@@ -7,6 +7,7 @@ import { Hero } from "@/components/home/Hero";
 import { Ledgers } from "@/components/home/Ledgers";
 import { Marquee } from "@/components/home/Marquee";
 import { Promises } from "@/components/home/Promises";
+import { Stats } from "@/components/home/Stats";
 import { JsonLd } from "@/components/JsonLd";
 import { ROUTES } from "@/config/routes";
 import { SITE } from "@/config/site";
@@ -18,6 +19,7 @@ export default function HomePage() {
       <Hero />
       <Marquee />
       <Ledgers />
+      <Stats />
       <Features />
       <Promises />
       <Faq />
@@ -67,6 +69,7 @@ function structuredData() {
         featureList: [
           "부부 · 가족 공유 가계부",
           "개인 가계부 · 월 예산",
+          "월간 · 연간 통계 · 지출 분포",
           "여행 가계부 · 외화 지출 · 여행 경비 정산",
           "고정비 · 정기 항목 관리",
           "통장 · 카드 · 현금 자산",
