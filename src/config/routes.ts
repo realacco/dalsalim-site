@@ -12,6 +12,7 @@ export const ROUTES = {
 /** 홈 안의 구역 — 머리 메뉴가 그 자리로 내려간다 */
 export const SECTIONS = {
   ledgers: "ledgers",
+  stats: "stats",
   features: "features",
   promises: "promises",
 } as const;
