@@ -25,6 +25,10 @@ const NAMES = [
   "glance-pink",
   "assets-dark",
   "personal-spend-dark",
+  "assets",
+  "personal-spend",
+  "personal-yearly",
+  "family-yearly",
 ];
 
 const from = process.argv[2];
