@@ -51,7 +51,7 @@ export const FOOTER_LINKS = [
 
 export type Platform = {
   name: string;
-  /** 아직 받을 수 없을 때 이름 뒤에 붙는 말 — 「안드로이드 베타 테스트 중」 */
+  /** 아직 받을 수 없을 때 이름 뒤에 붙는 말 — 「iOS 준비 중」 */
   pending: string;
   /** 받을 수 있게 되면 채운다. 비어 있는 동안은 눌리지 않는 상태 표시로 그린다 */
   storeUrl: string | null;
@@ -63,7 +63,7 @@ export const PLATFORMS: readonly Platform[] = [
   {
     name: "안드로이드",
     pending: "베타 테스트 중",
-    storeUrl: null,
+    storeUrl: "https://play.google.com/store/apps/details?id=com.dalsalim.app",
     storeLabel: "안드로이드 앱 받기",
   },
   { name: "iOS", pending: "준비 중", storeUrl: null, storeLabel: "iOS 앱 받기" },

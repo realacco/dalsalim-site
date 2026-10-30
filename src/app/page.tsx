@@ -10,7 +10,7 @@ import { Promises } from "@/components/home/Promises";
 import { Stats } from "@/components/home/Stats";
 import { JsonLd } from "@/components/JsonLd";
 import { ROUTES } from "@/config/routes";
-import { SITE } from "@/config/site";
+import { PLATFORMS, SITE } from "@/config/site";
 
 export default function HomePage() {
   return (
@@ -65,6 +65,7 @@ function structuredData() {
         ),
         applicationCategory: "FinanceApplication",
         operatingSystem: "Android",
+        installUrl: PLATFORMS.find((platform) => platform.storeUrl)?.storeUrl,
         inLanguage: "ko",
         featureList: [
           "부부 · 가족 공유 가계부",
