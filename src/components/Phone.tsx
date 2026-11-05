@@ -1,4 +1,4 @@
-/** `public/shots/` 의 캡처 — 1080x2400 원본을 폭 540 으로 줄인 것 (`scripts/shots.mjs`) */
+/** `public/shots/` 의 캡처 — 9:20 원본(1080x2400 · 1440x3200)을 폭 540 으로 줄인 것 (`scripts/shots.mjs`) */
 const SHOT = { width: 540, height: 1200 };
 
 /**
