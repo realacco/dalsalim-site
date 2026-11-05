@@ -3,7 +3,7 @@
 
     npm run shots -- <캡처 폴더>
 
-  캡처는 에뮬레이터에서 예시 데이터로 찍은 1080x2400 원본이다(실제 금액 · 이름 · 가게가 찍힌 것은 넣지 않는다).
+  캡처는 에뮬레이터에서 예시 데이터로 찍은 원본이다(1080x2400 이나 1440x3200 — 비율이 같다)(실제 금액 · 이름 · 가게가 찍힌 것은 넣지 않는다).
   홈이 쓰는 이름만 바꾸고, 폭 540 으로 줄인다 — 폰 틀 안에서 가장 커도 300 안팎이라 두 배 화면에서도 또렷하다.
   폭과 높이는 `src/components/Phone.tsx` 의 `SHOT` 이 들고 있다. 캡처의 비율이 바뀌면 거기도 고친다.
 */
@@ -29,6 +29,8 @@ const NAMES = [
   "personal-spend",
   "personal-yearly",
   "family-yearly",
+  "subscriptions",
+  "subscription-services",
 ];
 
 const from = process.argv[2];

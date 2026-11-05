@@ -39,7 +39,7 @@ const SMALL = [
   },
 ];
 
-/** 기능 묶음 — 결제 알림함 · 자산, 작은 칸 셋, 화면(테마). 알림함과 화면은 한 줄을 다 쓴다 */
+/** 기능 묶음 — 결제 알림함 · 자산, 작은 칸 셋, 구독, 화면(테마). 알림함 · 구독 · 화면은 한 줄을 다 쓴다 */
 export function Features() {
   return (
     <section className="features" id={SECTIONS.features} aria-labelledby="features-title">
@@ -102,6 +102,28 @@ export function Features() {
             </article>
           ))}
 
+          <article className="tile tile-subs tile-wide reveal" data-tilt="3">
+            <div className="tile-text">
+              <p className="tile-label">구독 관리</p>
+              <h3>매달 · 매년 나가는 구독을 한곳에</h3>
+              <p className="soft">
+                구독을 정기 항목으로 적어 두면 결제일에 내 가계부에 저절로 적혀요. 일 년에 한 번
+                나가는 연 구독도 결제 달에 맞춰 적고, 구독 중인 서비스와 1년 합계를 한 화면에서
+                봐요. 가족 고정비에도 구독을 적을 수 있어요.
+              </p>
+            </div>
+            <div className="tile-shots">
+              <Phone
+                shot="subscriptions"
+                alt="정기 항목 관리 화면 예시. 매달 나가는 돈과 이번 달 남은 결제, 음악 구독 · 사진 보관함 같은 정기 항목이 보여요."
+              />
+              <Phone
+                shot="subscription-services"
+                alt="구독 중인 서비스 화면 예시. 구독 5개의 1년 합계가 있고, 월 구독과 연 구독이 나뉘어 있어요."
+              />
+            </div>
+          </article>
+
           <article className="tile tile-theme tile-wide reveal" data-tilt="3">
             <div className="tile-text">
               <p className="tile-label">화면</p>
@@ -112,7 +134,7 @@ export function Features() {
             <div className="tile-shots">
               <Phone
                 shot="glance-pink"
-                alt="핑크 강조색을 고른 월간지표 화면 예시. 10월 총 지출과 이 달 예산이 보여요."
+                alt="핑크 강조색을 고른 월간지표 화면 예시. 9월 총 지출과 이 달 예산이 보여요."
               />
               <Phone
                 shot="personal-spend-dark"
