@@ -65,7 +65,7 @@ export function Features() {
             <div className="tile-shots">
               <Phone
                 shot="inbox"
-                alt="결제 알림함 화면 예시. S카드와 H카드의 결제 알림이 쌓여 있고, 분류를 골라 추가해요."
+                alt="결제 알림함 화면 예시. 여러 카드의 결제 알림이 쌓여 있고, 분류를 골라 추가해요."
               />
               <Phone
                 shot="auto-records"
@@ -119,7 +119,7 @@ export function Features() {
               />
               <Phone
                 shot="subscription-services"
-                alt="구독 중인 서비스 화면 예시. 구독 5개의 1년 합계가 있고, 월 구독과 연 구독이 나뉘어 있어요."
+                alt="구독 중인 서비스 화면 예시. 구독 7개의 1년 합계가 있고, 월 구독과 연 구독이 나뉘어 있어요."
               />
             </div>
           </article>
@@ -134,7 +134,7 @@ export function Features() {
             <div className="tile-shots">
               <Phone
                 shot="glance-pink"
-                alt="핑크 강조색을 고른 월간지표 화면 예시. 9월 총 지출과 이 달 예산이 보여요."
+                alt="핑크 강조색을 고른 월간지표 화면 예시. 10월 총 지출과 이 달 예산이 보여요."
               />
               <Phone
                 shot="personal-spend-dark"
