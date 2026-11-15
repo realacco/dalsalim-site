@@ -15,7 +15,7 @@ function currentTheme(): Theme {
  * 밝게 · 어둡게 전환. 처음에는 기기 설정을 따르고, 누르면 반대로 바뀐다.
  * 고른 값은 이 브라우저에만 저장한다 — 어디로도 보내지 않는다.
  */
-export function ThemeToggle() {
+export function ThemeToggle({ label }: { label: string }) {
   function toggle() {
     const next: Theme = currentTheme() === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;
@@ -31,8 +31,8 @@ export function ThemeToggle() {
       type="button"
       className="theme-toggle press"
       onClick={toggle}
-      aria-label="밝게 · 어둡게 전환"
-      title="밝게 · 어둡게 전환"
+      aria-label={label}
+      title={label}
     />
   );
 }

@@ -21,6 +21,42 @@ const OUT = join(process.cwd(), "out");
 const PORT = 4598;
 const BASE = `http://localhost:${PORT}`;
 const SITE_URL = "https://ddoring.dabutdev.com";
+/*
+  언어마다의 홈 — 앱이 고르는 세 언어와 같다. 받은 HTML 에 그 언어의 글이 있는지,
+  머리의 언어 · 제목이 맞는지를 이 표로 본다
+*/
+const LOCALE_PAGES = {
+  "/": {
+    lang: "ko",
+    name: "또링 가계부",
+    mustHave: ["가계부 세 권", "소비를 평가하지 않아요", "내 가계부", "가족 가계부", "여행 가계부"],
+    help: "https://api.dabutdev.com/help",
+  },
+  "/en/": {
+    lang: "en",
+    name: "Ddoring Budget",
+    mustHave: [
+      "three ledgers",
+      "No judging your spending",
+      "My ledger",
+      "Family ledger",
+      "Trip ledger",
+    ],
+    help: "https://api.dabutdev.com/help?lang=en",
+  },
+  "/ja/": {
+    lang: "ja",
+    name: "Ddoring 家計簿",
+    mustHave: [
+      "3冊の家計簿",
+      "お金の使い方を評価しません",
+      "自分の家計簿",
+      "家族の家計簿",
+      "旅行の家計簿",
+    ],
+    help: "https://api.dabutdev.com/help?lang=ja",
+  },
+};
 const AXE = readFileSync(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
 
 if (!existsSync(join(OUT, "index.html"))) {
@@ -38,36 +74,50 @@ const browser = await chromium.launch();
 try {
   ok("보안 헤더에 콘텐츠 보안 정책이 있음", "Content-Security-Policy" in globalHeaders(OUT));
 
-  // ── 스크립트 없이 받은 HTML — 검색 엔진이 읽는 것 ──────────────
-  const home = readFileSync(join(OUT, "index.html"), "utf8");
-  ok("홈 HTML 에 제목 글", home.includes("가계부 세 권"));
-  ok("홈 HTML 에 약속 글", home.includes("소비를 평가하지 않아요"));
-  ok(
-    "홈 HTML 에 가계부 세 권의 글",
-    ["내 가계부", "가족 가계부", "여행 가계부"].every((t) => home.includes(t)),
-  );
-  ok("홈 HTML 에 도움말 링크", home.includes("https://api.dabutdev.com/help"));
+  // ── 스크립트 없이 받은 HTML — 검색 엔진이 읽는 것 · 언어마다 ──────────────
+  for (const [path, locale] of Object.entries(LOCALE_PAGES)) {
+    const html = readFileSync(join(OUT, path, "index.html"), "utf8");
+    const missingText = locale.mustHave.filter((text) => !html.includes(text));
+    ok(`${path} HTML 에 그 언어의 글`, missingText.length === 0, missingText.join(" / "));
+    ok(`${path} HTML 에 도움말 링크`, html.includes(locale.help));
 
-  // 자주 묻는 것 — 구조화 데이터의 물음이 화면에도 똑같이 있어야 한다(다르면 검색 엔진이 속임으로 본다)
-  const graph = [...home.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)]
-    .map((match) => JSON.parse(match[1]))
-    .flatMap((data) => data["@graph"] ?? [data]);
-  const types = graph.map((node) => node["@type"]);
-  ok(
-    "구조화 데이터에 만든 곳 · 사이트 · 앱 · 자주 묻는 것",
-    ["Organization", "WebSite", "MobileApplication", "FAQPage"].every((t) => types.includes(t)),
-    types.join(" "),
-  );
-  const questions = graph.find((node) => node["@type"] === "FAQPage")?.mainEntity ?? [];
-  const unseen = questions.filter((q) => !home.includes(`>${q.name}<`)).map((q) => q.name);
-  ok("자주 묻는 것이 화면과 같음", questions.length > 0 && unseen.length === 0, unseen.join(" / "));
+    // 자주 묻는 것 — 구조화 데이터의 물음이 화면에도 똑같이 있어야 한다(다르면 검색 엔진이 속임으로 본다)
+    const graph = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)]
+      .map((match) => JSON.parse(match[1]))
+      .flatMap((data) => data["@graph"] ?? [data]);
+    const types = graph.map((node) => node["@type"]);
+    ok(
+      `${path} 구조화 데이터에 만든 곳 · 사이트 · 앱 · 자주 묻는 것`,
+      ["Organization", "WebSite", "MobileApplication", "FAQPage"].every((t) => types.includes(t)),
+      types.join(" "),
+    );
+    const questions = graph.find((node) => node["@type"] === "FAQPage")?.mainEntity ?? [];
+    const unseen = questions.filter((q) => !html.includes(`>${q.name}<`)).map((q) => q.name);
+    ok(
+      `${path} 자주 묻는 것이 화면과 같음`,
+      questions.length > 0 && unseen.length === 0,
+      unseen.join(" / "),
+    );
+    // 다른 언어의 한글이 새지 않았다 — 영어 · 일본어 페이지에 남는 한글은 언어 이름 · 앱의 한국어 이름뿐이다
+    if (locale.lang !== "ko") {
+      const hangul = [...new Set(html.match(/[가-힣][가-힣 ]*/g) ?? [])].filter(
+        (text) => !["한국어", "또링 가계부", "또링가계부", "또링", "달살림"].includes(text.trim()),
+      );
+      ok(`${path} 에 옮기지 않은 한국어가 없음`, hangul.length === 0, hangul.join(" / "));
+    }
+  }
+  const home = readFileSync(join(OUT, "index.html"), "utf8");
   ok("llms.txt 가 있음", existsSync(join(OUT, "llms.txt")));
 
   const sitemap = readFileSync(join(OUT, "sitemap.xml"), "utf8");
   const listed = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) =>
     match[1].replace(SITE_URL, ""),
   );
-  ok("사이트맵에 홈", listed.includes("/"), listed.join(" "));
+  ok(
+    "사이트맵에 세 언어의 홈",
+    Object.keys(LOCALE_PAGES).every((path) => listed.includes(path)),
+    listed.join(" "),
+  );
   // 홈이 싣는 화면 사진이 다 있다 — shots 를 안 돌리고 이름만 바꾸면 여기서 걸린다
   const missingShots = [...home.matchAll(/<img[^>]+src="(\/shots\/[^"]+)"/g)]
     .map((match) => match[1])
@@ -101,13 +151,17 @@ try {
         ogSite: meta('meta[property="og:site_name"]'),
         twitterImage: meta('meta[name="twitter:image"]'),
         lang: document.documentElement.lang,
+        hreflang: [...document.querySelectorAll("link[rel=alternate][hreflang]")].map(
+          (link) => `${link.hreflang}=${link.href}`,
+        ),
+        languageLinks: [...document.querySelectorAll(".lang-menu a")].map((link) => link.hreflang),
         h1: document.querySelectorAll("h1").length,
         structured: document.querySelectorAll('script[type="application/ld+json"]').length,
       };
     });
     const url = `${SITE_URL}${path}`;
     const missing = [
-      !head.title.includes("또링 가계부") && "제목",
+      !head.title.includes(LOCALE_PAGES[path]?.name ?? "또링 가계부") && "제목",
       head.description.length < 20 && "설명",
       head.canonical !== url && "대표 주소",
       head.ogUrl !== url && "공유 주소",
@@ -115,7 +169,14 @@ try {
       !head.ogImage.includes("opengraph-image") && "공유 그림",
       !head.twitterImage && "트위터 그림",
       !head.ogSite && "사이트 이름",
-      head.lang !== "ko" && "lang",
+      head.lang !== (LOCALE_PAGES[path]?.lang ?? "ko") && "lang",
+      ![
+        `ko=${SITE_URL}/`,
+        `en=${SITE_URL}/en/`,
+        `ja=${SITE_URL}/ja/`,
+        `x-default=${SITE_URL}/`,
+      ].every((pair) => head.hreflang.includes(pair)) && "hreflang",
+      head.languageLinks.join(",") !== "ko,en,ja" && "언어 고르기",
       head.h1 !== 1 && "h1 하나",
       head.structured === 0 && "구조화 데이터",
     ].filter(Boolean);
@@ -194,6 +255,21 @@ try {
   }
   const footer = await page.$$eval(".site-footer a", (links) => links.map((link) => link.href));
   ok("꼬리말 링크 다섯", footer.length === 5, footer.join(" "));
+  await page.goto(`${BASE}/en/`, { waitUntil: "networkidle" });
+  const footerEn = await page.$$eval(".site-footer a", (links) => links.map((link) => link.href));
+  ok(
+    "영어 페이지의 바깥 링크는 영어로 연다",
+    footerEn.length === 5 && footerEn.every((href) => href.endsWith("?lang=en")),
+    footerEn.join(" "),
+  );
+  // 언어 고르기 — 펼쳐서 일본어를 누르면 일본어 홈이다
+  await page.click(".lang-menu summary");
+  await page.click('.lang-menu a[hreflang="ja"]');
+  await page.waitForURL(`${BASE}/ja/`);
+  ok(
+    "언어 고르기로 일본어 홈에 감",
+    (await page.evaluate(() => document.documentElement.lang)) === "ja",
+  );
 
   // ── 움직임 ──────────────────────────────────────────────────
   await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
