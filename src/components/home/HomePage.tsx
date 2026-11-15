@@ -1,6 +1,7 @@
 import "./home.css";
 
 import { JsonLd } from "@/components/JsonLd";
+import { shotPath } from "@/components/Phone";
 import { PLATFORMS, SITE } from "@/config/site";
 import { homePath, LOCALE_INFO, type Locale, messages, withStoreLang } from "@/i18n";
 
@@ -68,7 +69,7 @@ function structuredData(locale: Locale) {
         url: pageUrl,
         image: `${SITE.url}/icon.png`,
         screenshot: ["personal-records", "family-summary", "trip-settlement"].map(
-          (shot) => `${SITE.url}/shots/${shot}.webp`,
+          (shot) => `${SITE.url}${shotPath(shot, locale)}`,
         ),
         applicationCategory: "FinanceApplication",
         operatingSystem: "Android",

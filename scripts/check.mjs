@@ -118,11 +118,21 @@ try {
     Object.keys(LOCALE_PAGES).every((path) => listed.includes(path)),
     listed.join(" "),
   );
-  // 홈이 싣는 화면 사진이 다 있다 — shots 를 안 돌리고 이름만 바꾸면 여기서 걸린다
-  const missingShots = [...home.matchAll(/<img[^>]+src="(\/shots\/[^"]+)"/g)]
-    .map((match) => match[1])
-    .filter((src) => !existsSync(join(OUT, src)));
-  ok("홈의 화면 사진 파일이 다 있음", missingShots.length === 0, missingShots.join(" "));
+  // 홈이 싣는 화면 사진이 다 있고, 그 언어의 앱으로 찍은 사진이다 — shots 를 안 돌리고 이름만 바꾸면 여기서 걸린다
+  for (const [path, locale] of Object.entries(LOCALE_PAGES)) {
+    const html = readFileSync(join(OUT, path, "index.html"), "utf8");
+    const shots = [...html.matchAll(/<img[^>]+src="(\/shots\/[^"]+)"/g)].map((match) => match[1]);
+    const missingShots = shots.filter((src) => !existsSync(join(OUT, src)));
+    ok(`${path} 의 화면 사진 파일이 다 있음`, missingShots.length === 0, missingShots.join(" "));
+    const folder =
+      locale.lang === "ko" ? /^\/shots\/[^/]+$/ : new RegExp(`^/shots/${locale.lang}/`);
+    const foreign = shots.filter((src) => !folder.test(src));
+    ok(
+      `${path} 는 그 언어의 앱 사진을 씀`,
+      shots.length > 0 && foreign.length === 0,
+      foreign.join(" "),
+    );
+  }
 
   const context = await browser.newContext({
     viewport: { width: 1280, height: 900 },

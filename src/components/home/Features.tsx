@@ -56,8 +56,8 @@ export function Features({ locale }: { locale: Locale }) {
               <p className="soft">{m.inbox.text}</p>
             </div>
             <div className="tile-shots">
-              <Phone shot="inbox" alt={m.inbox.alts[0]} />
-              <Phone shot="auto-records" alt={m.inbox.alts[1]} />
+              <Phone locale={locale} shot="inbox" alt={m.inbox.alts[0]} />
+              <Phone locale={locale} shot="auto-records" alt={m.inbox.alts[1]} />
             </div>
           </article>
 
@@ -68,7 +68,7 @@ export function Features({ locale }: { locale: Locale }) {
               <p className="soft">{m.assets.text}</p>
             </div>
             <div className="tile-shots">
-              <Phone shot="assets-dark" alt={m.assets.alt} />
+              <Phone locale={locale} shot="assets-dark" alt={m.assets.alt} />
             </div>
           </article>
 
@@ -91,8 +91,8 @@ export function Features({ locale }: { locale: Locale }) {
               <p className="soft">{m.subscriptions.text}</p>
             </div>
             <div className="tile-shots">
-              <Phone shot="subscriptions" alt={m.subscriptions.alts[0]} />
-              <Phone shot="subscription-services" alt={m.subscriptions.alts[1]} />
+              <Phone locale={locale} shot="subscriptions" alt={m.subscriptions.alts[0]} />
+              <Phone locale={locale} shot="subscription-services" alt={m.subscriptions.alts[1]} />
             </div>
           </article>
 
@@ -110,8 +110,8 @@ export function Features({ locale }: { locale: Locale }) {
               />
             </div>
             <div className="tile-shots">
-              <Phone shot="glance-pink" alt={m.theme.alts[0]} />
-              <Phone shot="personal-spend-dark" alt={m.theme.alts[1]} />
+              <Phone locale={locale} shot="glance-pink" alt={m.theme.alts[0]} />
+              <Phone locale={locale} shot="personal-spend-dark" alt={m.theme.alts[1]} />
             </div>
           </article>
         </div>

@@ -42,12 +42,18 @@ export function Hero({ locale }: { locale: Locale }) {
         </div>
 
         <div className="hero-stage">
-          <Phone shot="trip-records" className="side left" alt={m.alts.trip} />
-          <Phone shot="family-summary" className="side right" alt={m.alts.family} />
-          <Phone shot="personal-records" className="center" eager alt={m.alts.personal} />
+          <Phone locale={locale} shot="trip-records" className="side left" alt={m.alts.trip} />
+          <Phone locale={locale} shot="family-summary" className="side right" alt={m.alts.family} />
+          <Phone
+            locale={locale}
+            shot="personal-records"
+            className="center"
+            eager
+            alt={m.alts.personal}
+          />
           <p className="float-chip chip-budget" aria-hidden="true">
             {m.chipBudget}
-            <b>{won(578400, locale)}</b>
+            <b>{won(574300, locale)}</b>
           </p>
           <p className="float-chip chip-free" aria-hidden="true">
             {m.chipFree}

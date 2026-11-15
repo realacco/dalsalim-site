@@ -1,7 +1,8 @@
 /*
   앱 화면 캡처를 홈에 싣는 가벼운 WebP 로 바꾼다.
 
-    npm run shots -- <캡처 폴더>
+    npm run shots -- <캡처 폴더>          한국어 앱으로 찍은 것 → public/shots/
+    npm run shots -- <캡처 폴더> en       영어 앱으로 찍은 것 → public/shots/en/ (일본어는 ja)
 
   캡처는 에뮬레이터에서 예시 데이터로 찍은 원본이다(1080x2400 이나 1440x3200 — 비율이 같다)(실제 금액 · 이름 · 가게가 찍힌 것은 넣지 않는다).
   홈이 쓰는 이름만 바꾸고, 폭 540 으로 줄인다 — 폰 틀 안에서 가장 커도 300 안팎이라 두 배 화면에서도 또렷하다.
@@ -38,7 +39,13 @@ if (!from) {
   console.error("캡처 폴더를 알려주세요: npm run shots -- <폴더>");
   process.exit(1);
 }
-const out = join(process.cwd(), "public/shots");
+// 한국어가 아닌 언어는 그 언어의 폴더로 — 페이지가 자기 언어의 사진을 고른다(`src/components/Phone.tsx` 의 `shotPath`)
+const locale = process.argv[3];
+if (locale && !["en", "ja"].includes(locale)) {
+  console.error("언어는 en 이나 ja 예요. 한국어는 비워 두세요.");
+  process.exit(1);
+}
+const out = join(process.cwd(), "public/shots", locale ?? "");
 mkdirSync(out, { recursive: true });
 
 for (const name of NAMES) {
@@ -51,5 +58,5 @@ for (const name of NAMES) {
     .resize({ width: 540 })
     .webp({ quality: 82 })
     .toFile(join(out, `${name}.webp`));
-  console.log(`public/shots/${name}.webp`);
+  console.log(join(out, `${name}.webp`));
 }
