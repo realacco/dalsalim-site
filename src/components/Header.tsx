@@ -1,21 +1,23 @@
 import Link from "next/link";
 
-import { NAV, ROUTES } from "@/config/routes";
-import { SITE } from "@/config/site";
+import { navItems } from "@/config/routes";
+import { homePath, type Locale, messages } from "@/i18n";
 
+import { LanguageMenu } from "./LanguageMenu";
 import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
 
-export function Header() {
+export function Header({ locale }: { locale: Locale }) {
+  const m = messages(locale);
   return (
     <header className="site-header">
       <div className="wrap">
-        <Link href={ROUTES.home} className="site-logo press">
-          <Logo />
-          {SITE.name}
+        <Link href={homePath(locale)} className="site-logo press">
+          <Logo label={m.common.logo} />
+          {m.site.name}
         </Link>
-        <nav className="site-nav" aria-label="주요 메뉴">
-          {NAV.map((item) => (
+        <nav className="site-nav" aria-label={m.common.mainNav}>
+          {navItems(locale).map((item) => (
             <a
               key={item.href}
               href={item.href}
@@ -26,7 +28,8 @@ export function Header() {
             </a>
           ))}
         </nav>
-        <ThemeToggle />
+        <LanguageMenu locale={locale} />
+        <ThemeToggle label={m.common.themeToggle} />
       </div>
     </header>
   );

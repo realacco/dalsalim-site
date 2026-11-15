@@ -3,9 +3,13 @@ import "./closing.css";
 import { Logo } from "@/components/Logo";
 import { PlatformStatus } from "@/components/PlatformStatus";
 import { HELP } from "@/config/site";
+import { type Locale, messages, withLang } from "@/i18n";
+
+import { Highlighted } from "./Highlighted";
 
 /** 맨 끝 — 빛 고리 안의 로고와 받기 자리 */
-export function Closing() {
+export function Closing({ locale }: { locale: Locale }) {
+  const m = messages(locale);
   return (
     <section className="closing" aria-labelledby="closing-title">
       <div className="aurora" aria-hidden="true">
@@ -16,15 +20,15 @@ export function Closing() {
       </div>
       <div className="wrap reveal">
         <div className="logo-ring">
-          <Logo />
+          <Logo label={m.common.logo} />
         </div>
         <h2 id="closing-title">
-          살림을 <span className="grad-text">한곳에</span>
+          <Highlighted text={m.closing.title} />
         </h2>
-        <p className="soft">나 · 가족 · 여행, 가계부 세 권을 또링 가계부 하나로.</p>
-        <PlatformStatus />
-        <a href={HELP.href} className="text-link press">
-          쓰는 법이 궁금하면 도움말 ›
+        <p className="soft">{m.closing.lede}</p>
+        <PlatformStatus locale={locale} />
+        <a href={withLang(HELP, locale)} className="text-link press">
+          {m.closing.helpLink}
         </a>
       </div>
     </section>

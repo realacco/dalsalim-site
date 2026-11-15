@@ -5,14 +5,23 @@ import { useId } from "react";
  * 파일이 아니라 SVG 로 그려서 어떤 크기에서도 또렷하다. 색은 토큰의 브랜드 색이라 두 테마에서 같다.
  * 한 페이지에 로고가 여럿 서므로 그라데이션 · 마스크의 이름을 로고마다 따로 짓는다.
  */
-export function Logo({ className, tile = true }: { className?: string; tile?: boolean }) {
+export function Logo({
+  className,
+  label,
+  tile = true,
+}: {
+  className?: string;
+  /** 읽어 주는 이름 — 그 페이지의 언어로 */
+  label: string;
+  tile?: boolean;
+}) {
   const id = useId().replace(/:/g, "");
   const ref = (name: string) => `url(#${id}${name})`;
   const front =
     "M421.1 425.5 L698.9 350.5 C753.0 335.9 780.0 356.6 780.0 412.6 L780.0 584.6 C780.0 640.6 753.0 675.9 698.9 690.5 L421.1 765.5 C367.0 780.1 340.0 759.4 340.0 703.4 L340.0 531.4 C340.0 475.4 367.0 440.1 421.1 425.5 Z";
 
   return (
-    <svg className={className} viewBox="0 0 1024 1024" role="img" aria-label="또링 가계부 로고">
+    <svg className={className} viewBox="0 0 1024 1024" role="img" aria-label={label}>
       <defs>
         <linearGradient id={`${id}tile`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="var(--brand-tile-a)" />

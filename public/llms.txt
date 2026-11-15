@@ -11,6 +11,8 @@
 ## 링크
 
 - [소개](https://ddoring.dabutdev.com/)
+- [About in English](https://ddoring.dabutdev.com/en/)
+- [日本語の紹介](https://ddoring.dabutdev.com/ja/)
 - [도움말](https://api.dabutdev.com/help)
 - [개인정보처리방침](https://api.dabutdev.com/privacy)
 - [이용약관](https://api.dabutdev.com/terms)

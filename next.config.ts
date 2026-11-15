@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   // 이미지 최적화 서버가 없다. 싣는 그림은 미리 크기를 맞춰 둔다
   images: { unoptimized: true },
+  // 언어마다 루트 레이아웃이 따로라(`app/(ko)` · `app/[locale]`) 없는 주소의 페이지를 한 레이아웃에서 못 만든다.
+  // `app/global-not-found.tsx` 가 레이아웃 없이 그 자리를 맡는다
+  experimental: { globalNotFound: true },
 };
 
 export default nextConfig;
