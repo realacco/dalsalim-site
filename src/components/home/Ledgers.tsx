@@ -46,7 +46,7 @@ export function Ledgers({ locale }: { locale: Locale }) {
               <div className="ledger-shots reveal">
                 <div className="ledger-glow" aria-hidden="true" />
                 {shots.map((shot, index) => (
-                  <Phone key={shot} shot={shot} alt={ledger.alts[index]} />
+                  <Phone locale={locale} key={shot} shot={shot} alt={ledger.alts[index]} />
                 ))}
               </div>
             </article>

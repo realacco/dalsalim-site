@@ -47,7 +47,7 @@ export function Stats({ locale }: { locale: Locale }) {
                   <h3>{stat.title}</h3>
                   <p className="soft">{stat.text}</p>
                 </div>
-                <Phone shot={shot} alt={stat.alt} />
+                <Phone locale={locale} shot={shot} alt={stat.alt} />
               </li>
             );
           })}

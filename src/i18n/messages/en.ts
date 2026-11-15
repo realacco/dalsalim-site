@@ -70,9 +70,9 @@ export const en: Messages = {
     alts: {
       trip: "Trip ledger example. Daily spending on an Osaka trip, shown in yen and won.",
       family:
-        "Family ledger summary example. Total spending for September and the items that changed this month.",
+        "Family ledger summary example. Total spending for October and the items that changed this month.",
       personal:
-        "My ledger records example. ₩578,400 left in the budget and spending grouped by day.",
+        "My ledger records example. ₩574,300 left in the budget and spending grouped by day.",
     },
     chipBudget: "Left in budget",
     chipFree: "A budget app that doesn't nag",
