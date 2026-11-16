@@ -134,6 +134,16 @@ try {
     );
   }
 
+  // 「화면」 칸은 견본을 누를 때 강조색마다의 사진으로 바꾼다 — 처음 HTML 에 없는 파일이라 이름으로 본다
+  const accents = ["blue", "green", "purple", "pink", "beige", "mono"];
+  for (const [path, locale] of Object.entries(LOCALE_PAGES)) {
+    const folder = locale.lang === "ko" ? "shots" : `shots/${locale.lang}`;
+    const missingTheme = accents
+      .flatMap((accent) => [`theme-glance-${accent}`, `theme-records-${accent}`])
+      .filter((name) => !existsSync(join(OUT, folder, `${name}.webp`)));
+    ok(`${path} 의 강조색 사진이 다 있음`, missingTheme.length === 0, missingTheme.join(" "));
+  }
+
   const context = await browser.newContext({
     viewport: { width: 1280, height: 900 },
     colorScheme: "light",
@@ -280,6 +290,34 @@ try {
     "언어 고르기로 일본어 홈에 감",
     (await page.evaluate(() => document.documentElement.lang)) === "ja",
   );
+
+  // ── 강조색 견본 — 누르면 칸의 사진 · 설명이 그 색의 것으로 ─────
+  for (const path of ["/", "/en/"]) {
+    await page.goto(`${BASE}${path}`, { waitUntil: "networkidle" });
+    await page.locator(".tile-theme .accents button").nth(3).click();
+    const swapped = await page.$$eval(".tile-theme img[data-accent-alt]", (imgs) =>
+      imgs.map((img) => ({
+        src: img.getAttribute("src"),
+        alt: img.alt,
+        template: img.dataset.accentAlt,
+      })),
+    );
+    const pinkName = await page
+      .locator(".tile-theme .accents button")
+      .nth(3)
+      .getAttribute("aria-label");
+    ok(
+      `${path} 견본을 누르면 칸의 사진이 그 강조색으로 바뀜`,
+      swapped.length === 2 &&
+        swapped.every(
+          (img) =>
+            img.src.endsWith("-pink.webp") &&
+            img.alt.includes(pinkName) &&
+            !img.alt.includes("{accent}"),
+        ),
+      swapped.map((img) => img.src).join(" "),
+    );
+  }
 
   // ── 움직임 ──────────────────────────────────────────────────
   await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
