@@ -23,15 +23,18 @@ const NAMES = [
   "family-summary",
   "trip-records",
   "trip-settlement",
-  "glance-pink",
   "assets-dark",
-  "personal-spend-dark",
   "assets",
   "personal-spend",
   "personal-yearly",
   "family-yearly",
   "subscriptions",
   "subscription-services",
+  // 「화면」 칸 — 강조색마다 밝게 월간지표 · 어둡게 내역 (src/components/home/Features.tsx 의 THEME_SHOTS · ACCENTS)
+  ...["blue", "green", "purple", "pink", "beige", "mono"].flatMap((accent) => [
+    `theme-glance-${accent}`,
+    `theme-records-${accent}`,
+  ]),
 ];
 
 const from = process.argv[2];

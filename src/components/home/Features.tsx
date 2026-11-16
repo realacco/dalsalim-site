@@ -9,7 +9,10 @@ import { Highlighted } from "./Highlighted";
 
 type AccentId = keyof Messages["features"]["theme"]["accents"];
 
-/** 강조색 여섯 — 앱의 「화면」에서 고르는 것과 같은 순서다. 이름은 `messages().features.theme.accents` */
+/**
+ * 강조색 여섯 — 앱의 「화면」에서 고르는 것과 같은 순서다. 이름은 `messages().features.theme.accents`.
+ * 사진은 강조색마다 찍었다(`theme-glance-<id>` 밝게 월간지표 · `theme-records-<id>` 어둡게 내역). 처음은 앱의 기본인 파랑이다
+ */
 const ACCENTS: { id: AccentId; color: string }[] = [
   { id: "blue", color: "var(--accent-blue)" },
   { id: "green", color: "var(--accent-green)" },
@@ -18,6 +21,9 @@ const ACCENTS: { id: AccentId; color: string }[] = [
   { id: "beige", color: "var(--accent-beige)" },
   { id: "mono", color: "var(--accent-mono)" },
 ];
+
+/** 「화면」 칸의 사진 둘 — 강조색마다 `<이름>-<강조색>` 으로 찍었다 */
+export const THEME_SHOTS = ["theme-glance", "theme-records"] as const;
 
 /** 작은 칸의 그림 — 24 칸 위에 선으로 그린다 */
 const ICONS = {
@@ -104,14 +110,22 @@ export function Features({ locale }: { locale: Locale }) {
               <AccentPicker
                 label={m.theme.pickerLabel}
                 accents={ACCENTS.map((accent) => ({
+                  id: accent.id,
                   name: m.theme.accents[accent.id],
                   color: accent.color,
                 }))}
               />
             </div>
             <div className="tile-shots">
-              <Phone locale={locale} shot="glance-pink" alt={m.theme.alts[0]} />
-              <Phone locale={locale} shot="personal-spend-dark" alt={m.theme.alts[1]} />
+              {THEME_SHOTS.map((shot, index) => (
+                <Phone
+                  key={shot}
+                  locale={locale}
+                  shot={`${shot}-${ACCENTS[0].id}`}
+                  alt={m.theme.alts[index].replace("{accent}", m.theme.accents[ACCENTS[0].id])}
+                  accentShot={{ altTemplate: m.theme.alts[index] }}
+                />
+              ))}
             </div>
           </article>
         </div>

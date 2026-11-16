@@ -234,8 +234,8 @@ export const en: Messages = {
         mono: "Mono",
       },
       alts: [
-        "Monthly stats example with the pink accent. October's total spending and the monthly budget.",
-        "Spending breakdown example in dark mode. A category donut and the list below.",
+        "Monthly stats example with the {accent} accent. October's total spending and the monthly budget.",
+        "My ledger records example in dark mode with the {accent} accent. What's left in the budget and spending by day.",
       ],
     },
   },

@@ -21,6 +21,7 @@ export function Phone({
   alt,
   className,
   eager = false,
+  accentShot,
 }: {
   shot: string;
   locale: Locale;
@@ -28,6 +29,11 @@ export function Phone({
   className?: string;
   /** 첫 화면에 바로 보이는 것만 먼저 받는다 */
   eager?: boolean;
+  /**
+   * 강조색마다 찍은 사진의 묶음 — 이름은 `<shot>-<강조색>`, 설명은 「{accent}」 자리가 빈 틀이다.
+   * 강조색 견본(`AccentPicker`)이 같은 칸의 이 사진을 찾아 고른 색의 사진 · 설명으로 바꾼다
+   */
+  accentShot?: { altTemplate: string };
 }) {
   return (
     <div className={className ? `phone ${className}` : "phone"}>
@@ -35,6 +41,7 @@ export function Phone({
       <img
         src={shotPath(shot, locale)}
         alt={alt}
+        data-accent-alt={accentShot?.altTemplate}
         width={SHOT.width}
         height={SHOT.height}
         loading={eager ? "eager" : "lazy"}
